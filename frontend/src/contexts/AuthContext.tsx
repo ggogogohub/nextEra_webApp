@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { AuthService } from '../services/auth.service';
-import { AuthState, LoginCredentials, User } from '../types/auth';
+import { AuthState, LoginCredentials } from '../types/auth';
 
 // Default auth state
 const defaultAuthState: AuthState = {

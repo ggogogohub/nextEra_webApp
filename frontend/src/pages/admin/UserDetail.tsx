@@ -196,6 +196,7 @@ const UserDetail = () => {
               setUser(updatedUser);
               resetForm({ values: { email: updatedUser.email, first_name: updatedUser.first_name, last_name: updatedUser.last_name, role: updatedUser.role } });
               setSuccess('User updated successfully!');
+              setTimeout(() => navigate('/admin/users'), 1000);
             } catch (err: any) {
               setError(err.response?.data?.detail || err.message || 'Failed to update user');
             } finally {

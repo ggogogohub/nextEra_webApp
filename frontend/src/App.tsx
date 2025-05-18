@@ -12,7 +12,10 @@ import NewUser from './pages/admin/NewUser';
 import UserDetail from './pages/admin/UserDetail';
 import Unauthorized from './pages/Unauthorized'; // Assuming Unauthorized page is created
 import Admin from './pages/admin/Admin';
+import RolesPage from './pages/admin/Roles';
 import SchedulesPage from './pages/Schedules';
+import NotificationsPage from './pages/Notifications';
+import Landing from './pages/Landing';
 
 // Create a client for React Query
 const queryClient = new QueryClient();
@@ -27,12 +30,14 @@ function App() {
               {/* Public routes */}
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
+              <Route path="/" element={<Landing />} />
 
               {/* Protected routes */}
               <Route element={<ProtectedRoute />}>
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/schedules" element={<SchedulesPage />} />
+                <Route path="/notifications" element={<NotificationsPage />} />
               </Route>
 
               {/* Admin routes */}
@@ -41,13 +46,14 @@ function App() {
                 <Route path="/admin/users/new" element={<NewUser />} />
                 <Route path="/admin/users/:id" element={<UserDetail />} />
                 <Route path="/admin/users" element={<UsersPage />} />
+                <Route path="/admin/roles" element={<RolesPage />} />
               </Route>
 
               {/* Unauthorized route */}
               <Route path="/unauthorized" element={<Unauthorized />} />
 
-              {/* Redirect to dashboard if authenticated, otherwise to login */}
-              <Route path="*" element={<Navigate to="/dashboard" replace />} />
+              {/* Redirect to landing if unknown route */}
+              <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </Layout>
         </Router>

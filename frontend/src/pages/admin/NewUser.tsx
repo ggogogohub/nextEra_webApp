@@ -73,7 +73,7 @@ const Input = styled(Field)`
   }
 `;
 
-const Select = styled(Field)`
+const StyledSelect = styled.select`
   width: 100%;
   padding: 0.75rem;
   border: 1px solid #ddd;
@@ -186,7 +186,7 @@ const NewUser = () => {
           validationSchema={NewUserSchema}
           onSubmit={handleSubmit}
         >
-          {({ isValid }) => (
+          {() => (
             <Form>
               <FormGroup>
                 <Label htmlFor="email">Email</Label>
@@ -214,16 +214,16 @@ const NewUser = () => {
 
               <FormGroup>
                 <Label htmlFor="role">Role</Label>
-                <Select as="select" id="role" name="role">
+                <Field as={StyledSelect} id="role" name="role">
                   <option value="">Select a role</option>
                   <option value="employee">Employee</option>
                   <option value="manager">Manager</option>
                   <option value="admin">Admin</option>
-                </Select>
+                </Field>
                 <ErrorMessage name="role" component={ErrorText} />
               </FormGroup>
 
-              <Button type="submit" disabled={submitting || !isValid}>
+              <Button type="submit" disabled={submitting}>
                 {submitting ? 'Creating...' : 'Create User'}
               </Button>
             </Form>
