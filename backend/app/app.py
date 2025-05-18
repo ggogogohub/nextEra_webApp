@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 import os
 from dotenv import load_dotenv
 
-from app.routers import auth, users, schedules, roles, logout
+from app.routers import auth, users, schedules, roles, logout, profile, notifications
 from app.utils.database import connect_to_mongo, close_mongo_connection
 
 # Load environment variables
@@ -40,6 +40,8 @@ def create_app() -> FastAPI:
     app.include_router(users.router, prefix=f"{api_prefix}/users", tags=["Users"])
     app.include_router(schedules.router, prefix=f"{api_prefix}/schedules", tags=["Schedules"])
     app.include_router(roles.router, prefix=f"{api_prefix}/roles", tags=["Roles"])
+    app.include_router(profile.router, prefix=f"{api_prefix}/profile", tags=["Profile"])
+    app.include_router(notifications.router, prefix=f"{api_prefix}/notifications", tags=["Notifications"])
 
     @app.get("/")
     async def root():

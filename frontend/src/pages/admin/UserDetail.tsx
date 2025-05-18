@@ -8,6 +8,7 @@ import { User } from '../../types/auth';
 
 // Validation schema for editing user
 const UserSchema = Yup.object().shape({
+  email: Yup.string().email('Invalid email address').required('Email is required'),
   first_name: Yup.string().required('First name is required'),
   last_name: Yup.string().required('Last name is required'),
   role: Yup.string()
@@ -60,7 +61,7 @@ const Input = styled(Field)`
   font-size: 1rem;
 `;
 
-const Select = styled(Field).attrs({ as: 'select' })`
+const Select = styled.select`
   width: 100%;
   padding: 0.75rem;
   border: 1px solid #ddd;
@@ -120,11 +121,16 @@ const AlertSuccess = styled.div`
   font-size: 0.875rem;
 `;
 
+const ErrorText = styled.div`
+  color: #e53935;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+`;
+
 const UserDetail = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [user, setUser] = useState<User | null>(null);
-  const [roles, setRoles] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
@@ -135,9 +141,7 @@ const UserDetail = () => {
       try {
         setLoading(true);
         const userData = id ? await UserService.getUser(id) : null;
-        const rolesList = await UserService.listRoles();
         setUser(userData);
-        setRoles(rolesList);
       } catch (err: any) {
         setError(err.response?.data?.detail || err.message || 'Failed to load data');
       } finally {
@@ -175,6 +179,7 @@ const UserDetail = () => {
         {success && <AlertSuccess>{success}</AlertSuccess>}
         {error && <AlertError>{error}</AlertError>}
         <Formik
+          enableReinitialize
           initialValues={{
             email: user?.email || '',
             first_name: user?.first_name || '',
@@ -182,12 +187,14 @@ const UserDetail = () => {
             role: user?.role || '',
           }}
           validationSchema={UserSchema}
-          onSubmit={async (values) => {
+          onSubmit={async (values, { resetForm }) => {
             if (!id) return;
             try {
               setSubmitting(true);
-              const updateData = { first_name: values.first_name, last_name: values.last_name, role: values.role };
-              await UserService.updateUser(id, updateData);
+              const updateData = { email: values.email, first_name: values.first_name, last_name: values.last_name, role: values.role };
+              const updatedUser = await UserService.updateUser(id, updateData);
+              setUser(updatedUser);
+              resetForm({ values: { email: updatedUser.email, first_name: updatedUser.first_name, last_name: updatedUser.last_name, role: updatedUser.role } });
               setSuccess('User updated successfully!');
             } catch (err: any) {
               setError(err.response?.data?.detail || err.message || 'Failed to update user');
@@ -196,37 +203,38 @@ const UserDetail = () => {
             }
           }}
         >
-          {({ isValid, dirty }) => (
+          {() => (
             <Form>
               <FormGroup>
-                <Label>Email</Label>
-                <Input name="email" disabled />
+                <Label htmlFor="email">Email</Label>
+                <Input id="email" name="email" />
+                <ErrorMessage name="email" component={ErrorText} />
               </FormGroup>
 
               <FormGroup>
                 <Label htmlFor="first_name">First Name</Label>
                 <Input id="first_name" name="first_name" />
-                <ErrorMessage name="first_name" component={() => <ErrorText>{(ErrorMessage as any).name}</ErrorText>} />
+                <ErrorMessage name="first_name" component={ErrorText} />
               </FormGroup>
 
               <FormGroup>
                 <Label htmlFor="last_name">Last Name</Label>
                 <Input id="last_name" name="last_name" />
-                <ErrorMessage name="last_name" component={() => <ErrorText>{(ErrorMessage as any).name}</ErrorText>} />
+                <ErrorMessage name="last_name" component={ErrorText} />
               </FormGroup>
 
               <FormGroup>
                 <Label htmlFor="role">Role</Label>
-                <Select id="role" name="role">
+                <Field as={Select} id="role" name="role">
                   <option value="">Select a role</option>
-                  {roles.map((r) => (
-                    <option key={r} value={r}>{r.charAt(0).toUpperCase() + r.slice(1)}</option>
-                  ))}
-                </Select>
-                <ErrorMessage name="role" component={() => <ErrorText>{(ErrorMessage as any).name}</ErrorText>} />
+                  <option value="employee">Employee</option>
+                  <option value="manager">Manager</option>
+                  <option value="admin">Admin</option>
+                </Field>
+                <ErrorMessage name="role" component={ErrorText} />
               </FormGroup>
 
-              <Button type="submit" disabled={submitting || !(isValid && dirty)}>
+              <Button type="submit" disabled={submitting}>
                 {submitting ? 'Saving...' : 'Save Changes'}
               </Button>
               <Button type="button" onClick={handleToggleActive} disabled={submitting}>
