@@ -12,6 +12,7 @@ import NewUser from './pages/admin/NewUser';
 import UserDetail from './pages/admin/UserDetail';
 import Unauthorized from './pages/Unauthorized'; // Assuming Unauthorized page is created
 import Admin from './pages/admin/Admin';
+import SchedulesPage from './pages/Schedules';
 
 // Create a client for React Query
 const queryClient = new QueryClient();
@@ -31,6 +32,7 @@ function App() {
               <Route element={<ProtectedRoute />}>
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/profile" element={<Profile />} />
+                <Route path="/schedules" element={<SchedulesPage />} />
               </Route>
 
               {/* Admin routes */}

@@ -155,6 +155,46 @@ async def create_time_off_request(
     data = {**created_request, 'id': str(created_request['_id'])}
     return TimeOffRequestResponse.model_validate(data)
 
+@router.put("/time-off/{request_id}", response_model=TimeOffRequestResponse)
+async def update_time_off_request(
+    request_id: str,
+    update_data: TimeOffRequestUpdate,
+    current_user = Depends(get_current_active_user)
+):
+    db = get_database()
+    # Validate ObjectId
+    if not ObjectId.is_valid(request_id):
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Invalid request ID"
+        )
+    # Fetch request
+    req = await db.time_off_requests.find_one({
+        "_id": ObjectId(request_id),
+        "employee_id": str(current_user["_id"])
+    })
+    if req is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Time-off request not found"
+        )
+    # Only pending can be updated
+    if req.get("status") != "pending":
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Only pending requests can be updated"
+        )
+    # Prepare update
+    update_fields = update_data.dict(exclude_unset=True)
+    update_fields["updated_at"] = datetime.utcnow()
+    await db.time_off_requests.update_one(
+        {"_id": ObjectId(request_id)},
+        {"$set": update_fields}
+    )
+    updated = await db.time_off_requests.find_one({"_id": ObjectId(request_id)})
+    data = {**updated, 'id': str(updated['_id'])}
+    return TimeOffRequestResponse.model_validate(data)
+
 @router.delete("/time-off/{request_id}", response_model=TimeOffRequestResponse)
 async def cancel_time_off_request(
     request_id: str,

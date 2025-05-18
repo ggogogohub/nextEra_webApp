@@ -2,6 +2,7 @@ import { ReactNode } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { useAuth } from '../contexts/AuthContext';
+import NotificationIcon from './NotificationIcon';
 
 // Styled components
 const LayoutContainer = styled.div`
@@ -104,6 +105,7 @@ const Layout = ({ children }: LayoutProps) => {
                 {user?.role === 'admin' && (
                   <NavLink to="/admin">Admin</NavLink>
                 )}
+                <NotificationIcon />
                 <LogoutButton onClick={handleLogout}>Logout</LogoutButton>
               </>
             ) : (

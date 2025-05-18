@@ -51,8 +51,12 @@ async def get_profile_availability(
     Get availability for the current user
     """
     db = get_database()
-    avail = await db.availability.find({"employee_id": str(current_user["_id"]) }).to_list(length=7)
-    return avail
+    docs = await db.availability.find({"employee_id": str(current_user["_id"]) }).to_list(length=7)
+    results: List[AvailabilityResponse] = []
+    for d in docs:
+        d["id"] = str(d["_id"])
+        results.append(AvailabilityResponse.model_validate(d))
+    return results
 
 @router.put("/availability", response_model=List[AvailabilityResponse])
 async def upsert_profile_availability(

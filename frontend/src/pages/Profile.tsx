@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import ProfileForm from '../components/profile/ProfileForm';
+import AvailabilityForm from '../components/profile/AvailabilityForm';
 
 // Styled components
 const ProfileContainer = styled.div`
@@ -17,6 +18,7 @@ const Profile = () => {
     <ProfileContainer>
       <Title>Your Profile</Title>
       <ProfileForm />
+      <AvailabilityForm />
     </ProfileContainer>
   );
 };
