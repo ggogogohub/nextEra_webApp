@@ -35,8 +35,8 @@ const Container = styled.div`
 
 const Card = styled.div`
   background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   padding: 2rem;
   width: 100%;
   max-width: 500px;
@@ -69,7 +69,6 @@ const Input = styled(Field)`
   &:focus {
     outline: none;
     border-color: #4a90e2;
-    box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
   }
 `;
 
@@ -84,7 +83,6 @@ const StyledSelect = styled.select`
   &:focus {
     outline: none;
     border-color: #4a90e2;
-    box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
   }
 `;
 
@@ -155,7 +153,7 @@ const NewUser = () => {
     try {
       setSubmitting(true);
       setError(null);
-      
+
       await UserService.createUser(values as any);
       setSuccess('User created successfully!');
       resetForm();

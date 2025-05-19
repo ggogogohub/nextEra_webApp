@@ -15,16 +15,17 @@ const LayoutContainer = styled.div`
 `;
 
 const Header = styled.header`
-  background: rgba(36, 48, 80, 0.7);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  background: rgba(29, 53, 87, 0.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   color: ${({ theme }) => theme.colors.offWhite};
   padding: 0.7rem 2.2rem;
-  box-shadow: 0 2px 16px 0 rgba(99, 102, 241, 0.10);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   min-height: 64px;
   display: flex;
   align-items: center;
   z-index: 1000;
+  border-radius: 0;
 `;
 
 const HeaderContent = styled.div`
@@ -50,17 +51,17 @@ const NavLink = styled(Link)`
   font-size: 1.08rem;
   letter-spacing: -0.01em;
   padding: 0.4rem 0.8rem;
-  border-radius: 0.7rem;
-  transition: background 0.18s, color 0.18s;
+  border-radius: 4px;
+  transition: background 0.2s, color 0.2s;
   &:hover, &:focus {
     background: ${({ theme }) => theme.colors.brightTeal};
     color: ${({ theme }) => theme.colors.deepNavy};
     text-decoration: none;
     outline: none;
   }
-  &:focus-visible {
-    outline: 2px solid ${({ theme }) => theme.colors.coralRed};
-    outline-offset: 2px;
+  &.active {
+    background: rgba(2,195,154,0.2);
+    color: ${({ theme }) => theme.colors.brightTeal};
   }
 `;
 
@@ -192,18 +193,23 @@ const ProfileMenuButton = styled.button`
   display: flex;
   align-items: center;
   outline: none;
+  border-radius: 4px;
+  &:focus {
+    outline: 2px solid ${({ theme }) => theme.colors.brightTeal};
+    outline-offset: 2px;
+  }
 `;
 
 // Styled Dropdown
 const StyledDropdownMenuContent = styled(DropdownMenu.Content)`
   min-width: 160px;
   background: #fff;
-  border-radius: 1.2rem;
-  box-shadow: 0 8px 32px 0 rgba(99, 102, 241, 0.19);
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   padding: 0.6rem 0;
   margin-top: 0.3rem;
   border: none;
-  animation: fadeIn 0.23s cubic-bezier(0.4,0,0.2,1);
+  animation: fadeIn 0.2s ease-out;
   z-index: 2000;
 
   @keyframes fadeIn {
@@ -220,8 +226,8 @@ const StyledDropdownMenuItem = styled(DropdownMenu.Item)`
   border: none;
   background: none;
   cursor: pointer;
-  transition: background 0.14s, color 0.14s;
-  border-radius: 0.8rem;
+  transition: background 0.2s, color 0.2s;
+  border-radius: 0;
   outline: none;
   display: flex;
   align-items: center;

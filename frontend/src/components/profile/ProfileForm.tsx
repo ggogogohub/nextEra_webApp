@@ -19,8 +19,8 @@ const ProfileSchema = Yup.object().shape({
 // Styled components
 const FormContainer = styled.div`
   background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   padding: 1.5rem;
   margin-bottom: 2rem;
 `;
@@ -47,13 +47,12 @@ const Input = styled(Field)`
   border: 1px solid #ddd;
   border-radius: 4px;
   font-size: 1rem;
-  
+
   &:focus {
     outline: none;
     border-color: #4a90e2;
-    box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
   }
-  
+
   &:disabled {
     background-color: #f5f5f5;
     cursor: not-allowed;
@@ -76,11 +75,11 @@ const Button = styled.button`
   font-weight: 500;
   cursor: pointer;
   transition: background-color 0.2s;
-  
+
   &:hover {
     background-color: #3a7bc8;
   }
-  
+
   &:disabled {
     background-color: #a0c3e8;
     cursor: not-allowed;
@@ -109,32 +108,32 @@ const ProfileForm = () => {
   const { user } = useAuth();
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
-  
+
   if (!user) {
     return <div>Loading profile...</div>;
   }
-  
+
   const handleSubmit = async (values: { email: string; first_name: string; last_name: string }) => {
     try {
       setError(null);
       setSuccess(null);
-      
+
       await api.put(`/users/${user.id}`, values);
-      
+
       setSuccess('Profile updated successfully!');
     } catch (err: any) {
       console.error('Error updating profile:', err);
       setError(err.response?.data?.detail || 'Failed to update profile');
     }
   };
-  
+
   return (
     <FormContainer>
       <FormTitle>Your Profile</FormTitle>
-      
+
       {error && <AlertError>{error}</AlertError>}
       {success && <AlertSuccess>{success}</AlertSuccess>}
-      
+
       <Formik
         initialValues={{
           email: user.email,
@@ -152,24 +151,24 @@ const ProfileForm = () => {
               <Input type="email" id="email" name="email" />
               <ErrorMessage name="email" component={ErrorText} />
             </FormGroup>
-            
+
             <FormGroup>
               <Label htmlFor="first_name">First Name</Label>
               <Input type="text" id="first_name" name="first_name" />
               <ErrorMessage name="first_name" component={ErrorText} />
             </FormGroup>
-            
+
             <FormGroup>
               <Label htmlFor="last_name">Last Name</Label>
               <Input type="text" id="last_name" name="last_name" />
               <ErrorMessage name="last_name" component={ErrorText} />
             </FormGroup>
-            
+
             <FormGroup>
               <Label htmlFor="role">Role</Label>
               <Input type="text" id="role" name="role" disabled value={user.role} />
             </FormGroup>
-            
+
             <Button type="submit" disabled={isSubmitting || !(isValid && dirty)}>
               {isSubmitting ? 'Saving...' : 'Save Changes'}
             </Button>

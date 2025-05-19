@@ -47,8 +47,8 @@ const RegisterContainer = styled.div`
 
 const RegisterCard = styled.div`
   background: #fff;
-  border-radius: 2rem;
-  box-shadow: 0 2px 16px 0 rgba(30, 41, 59, 0.06);
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   padding: 2.8rem 2.1rem 2.1rem 2.1rem;
   width: 100%;
   max-width: 380px;

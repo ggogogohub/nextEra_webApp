@@ -16,18 +16,18 @@ const LoginContainer = styled.div`
 `;
 
 const LoginCard = styled.div`
-  background: rgba(36, 48, 80, 0.7);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-radius: 2rem;
-  box-shadow: 0 2px 16px 0 rgba(30, 41, 59, 0.14);
+  background: rgba(29, 53, 87, 0.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   padding: 2.8rem 2.1rem 2.1rem 2.1rem;
   width: 100%;
   max-width: 380px;
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  border: 1px solid rgba(255,255,255,0.10);
+  border: none;
   @media (max-width: 480px) {
     padding: 1.2rem 0.5rem;
     max-width: 98vw;
@@ -61,16 +61,15 @@ const Label = styled.label`
 const StyledInput = styled.input`
   width: 100%;
   padding: 0.92rem 1.15rem;
-  border-radius: 0.9rem;
-  border: none;
+  border-radius: 4px;
+  border: 1px solid #ddd;
   background: ${({ theme }) => theme.colors.offWhite};
   font-size: 1.07rem;
   color: ${({ theme }) => theme.colors.deepNavy};
-  transition: box-shadow 0.18s, background 0.18s;
-  box-shadow: 0 1px 2px 0 rgba(30, 41, 59, 0.02) inset;
+  transition: border-color 0.2s, background 0.2s;
   &:focus {
-    background: ${({ theme }) => theme.colors.lightCyan};
-    box-shadow: 0 0 0 2px ${({ theme }) => theme.colors.brightTeal};
+    background: ${({ theme }) => theme.colors.offWhite};
+    border-color: ${({ theme }) => theme.colors.brightTeal};
     outline: none;
   }
 `;
@@ -90,29 +89,25 @@ const ForgotPassword = styled.div`
 
 const StyledButton = styled.button`
   width: 100%;
-  border-radius: 0.9rem;
+  border-radius: 4px;
   font-size: 1.12rem;
-  padding: 1.02rem 0;
+  padding: 1rem 0;
   background: ${({ theme }) => theme.colors.brightTeal};
   color: ${({ theme }) => theme.colors.deepNavy};
   font-weight: 700;
   border: none;
   margin-top: 0.1rem;
   margin-bottom: 0.7rem;
-  box-shadow: 0 2px 8px 0 rgba(2, 195, 154, 0.08);
-  transition: background 0.18s, box-shadow 0.18s, transform 0.13s;
+  transition: background 0.2s;
   cursor: pointer;
   &:hover, &:focus {
     background: ${({ theme }) => theme.colors.coralRed};
     color: ${({ theme }) => theme.colors.offWhite};
-    box-shadow: 0 4px 18px 0 rgba(230, 57, 70, 0.14);
-    transform: translateY(-1px) scale(1.01);
     outline: none;
   }
   &:active {
     background: ${({ theme }) => theme.colors.brightTeal};
     color: ${({ theme }) => theme.colors.deepNavy};
-    transform: none;
   }
   &:focus-visible {
     outline: 2px solid ${({ theme }) => theme.colors.coralRed};

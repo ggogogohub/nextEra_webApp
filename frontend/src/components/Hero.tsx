@@ -78,10 +78,10 @@ const PrimaryButton = styled(Link)`
   background: ${({ theme }) => theme.colors.brightTeal};
   color: ${({ theme }) => theme.colors.deepNavy};
   padding: 0.8rem 1.6rem;
-  border-radius: ${({ theme }) => theme.radii.sm};
+  border-radius: 4px;
   font-weight: 600;
   text-decoration: none;
-  transition: background ${({ theme }) => theme.transitions.default};
+  transition: background 0.2s;
 
   &:hover, &:focus {
     background: ${({ theme }) => theme.colors.offWhite};
@@ -95,10 +95,10 @@ const SecondaryButton = styled(Link)`
   color: ${({ theme }) => theme.colors.offWhite};
   padding: 0.8rem 1.6rem;
   border: 2px solid ${({ theme }) => theme.colors.offWhite};
-  border-radius: ${({ theme }) => theme.radii.sm};
+  border-radius: 4px;
   font-weight: 600;
   text-decoration: none;
-  transition: background ${({ theme }) => theme.transitions.default}, color ${({ theme }) => theme.transitions.default};
+  transition: background 0.2s, color 0.2s;
 
   &:hover, &:focus {
     background: ${({ theme }) => theme.colors.offWhite};

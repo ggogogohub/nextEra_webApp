@@ -12,8 +12,8 @@ const DashboardContainer = styled.div`
 
 const WelcomeCard = styled.div`
   background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   padding: 2rem;
   margin-bottom: 2rem;
 `;
@@ -50,7 +50,8 @@ const TabButton = styled.button<{ active: boolean }>`
   font-size: 1rem;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: background-color 0.2s;
+  border-radius: 4px 4px 0 0;
 
   &:hover {
     background-color: ${props => props.active ? '#4a90e2' : '#f5f5f5'};

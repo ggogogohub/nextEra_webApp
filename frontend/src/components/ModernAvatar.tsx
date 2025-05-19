@@ -5,18 +5,16 @@ import { User as UserIcon } from 'lucide-react';
 const AvatarCircle = styled.div`
   width: 36px;
   height: 36px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #6366f1 60%, #60a5fa 100%);
+  border-radius: 4px;
+  background: #6366f1;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 2px 8px 0 rgba(99, 102, 241, 0.12);
-  transition: box-shadow 0.18s, border 0.18s;
-  border: 2px solid transparent;
+  transition: background 0.2s;
   cursor: pointer;
   &:hover, &:focus {
-    box-shadow: 0 4px 16px 0 rgba(99, 102, 241, 0.22);
-    border: 2px solid #6366f1;
+    background: #4f46e5;
+    outline: none;
   }
 `;
 
@@ -30,7 +28,7 @@ const ModernAvatar: React.FC<ModernAvatarProps> = ({ imageUrl }) => (
       <img
         src={imageUrl}
         alt="Profile"
-        style={{ width: '100%', height: '100%', borderRadius: '50%' }}
+        style={{ width: '100%', height: '100%', borderRadius: '4px' }}
       />
     ) : (
       <UserIcon color="#fff" size={20} />

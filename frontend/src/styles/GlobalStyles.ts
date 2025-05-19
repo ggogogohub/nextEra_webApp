@@ -62,11 +62,11 @@ const GlobalStyles = createGlobalStyle`
 
   /* Glassmorphism utility */
   .glass {
-    background: rgba(36, 48, 80, 0.7);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border-radius: 1.2rem;
-    border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(29, 53, 87, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 4px;
+    border: none;
   }
 `;
 

@@ -4,18 +4,17 @@ import styled from 'styled-components';
 const CardContainer = styled.div`
   background: ${({ theme }) => theme.colors.offWhite};
   border-radius: ${({ theme }) => theme.radii.md};
-  box-shadow: ${({ theme }) => theme.shadows.sm};
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   padding: 1.5rem;
-  transition: transform ${({ theme }) => theme.transitions.default}, box-shadow ${({ theme }) => theme.transitions.default};
+  transition: box-shadow ${({ theme }) => theme.transitions.default};
   &.glass {
-    background: rgba(36, 48, 80, 0.7);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(29, 53, 87, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: none;
   }
   &:hover, &:focus {
-    transform: translateY(-4px);
-    box-shadow: ${({ theme }) => theme.shadows.md};
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
     outline: none;
   }
   &:focus-visible {

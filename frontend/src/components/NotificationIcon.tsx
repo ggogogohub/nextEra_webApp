@@ -17,17 +17,15 @@ const IconButton = styled.button`
   cursor: pointer;
   position: relative;
   font-size: 1.5rem;
-  border-radius: 50%;
+  border-radius: 4px;
   padding: 0.45rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 2px 8px 0 rgba(99, 102, 241, 0.12);
-  transition: background 0.16s, box-shadow 0.16s;
+  transition: background 0.2s;
   outline: none;
   &:hover, &:focus {
-    background: rgba(99,102,241,0.13);
-    box-shadow: 0 4px 16px 0 rgba(99, 102, 241, 0.18);
+    background: rgba(2,195,154,0.15);
     outline: none;
   }
 `;
@@ -36,9 +34,9 @@ const Badge = styled.span`
   position: absolute;
   top: -6px;
   right: -6px;
-  background: linear-gradient(90deg, #f43f5e 60%, #fbbf24 100%);
+  background: #f43f5e;
   color: #fff;
-  border-radius: 50%;
+  border-radius: 4px;
   min-width: 20px;
   height: 20px;
   padding: 0 6px;
@@ -47,13 +45,7 @@ const Badge = styled.span`
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 2px 8px 0 rgba(244,63,94,0.21);
-  border: 2px solid #fff;
-  animation: badgePulse 1.3s infinite alternate;
-  @keyframes badgePulse {
-    from { box-shadow: 0 2px 8px 0 rgba(244,63,94,0.21); }
-    to { box-shadow: 0 2px 18px 0 rgba(244,63,94,0.33); }
-  }
+  border: 1px solid #fff;
 `;
 
 const Dropdown = styled.div`
@@ -61,15 +53,15 @@ const Dropdown = styled.div`
   right: 0;
   top: 36px;
   background: #fff;
-  border-radius: 1.2rem;
-  box-shadow: 0 8px 32px 0 rgba(99, 102, 241, 0.19);
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   width: 320px;
   max-height: 420px;
   overflow-y: auto;
   z-index: 1000;
   color: #23272f;
   padding: 0.7rem 0 0.5rem 0;
-  animation: fadeIn 0.23s cubic-bezier(0.4,0,0.2,1);
+  animation: fadeIn 0.2s ease-out;
   border: none;
 
   @keyframes fadeIn {
@@ -78,9 +70,9 @@ const Dropdown = styled.div`
   }
 `;
 
-const Item = styled.div<{ isRead: boolean }>`
+const Item = styled.div<{ is_read: boolean }>`
   padding: 0.75rem;
-  background-color: ${({ isRead }) => (isRead ? '#f5f5f5' : '#fff8e1')};
+  background-color: ${({ is_read }) => (is_read ? '#f5f5f5' : '#fff8e1')};
   border-bottom: 1px solid #eee;
 `;
 
@@ -155,21 +147,21 @@ const NotificationIcon = () => {
     <IconContainer ref={ref}>
       <IconButton onClick={() => setOpen((o) => !o)} aria-label="Notifications" tabIndex={0}>
         <img src={ModernBell} alt="Notifications" style={{ width: 28, height: 28, display: 'block' }} />
-        {notifications.some((n) => !n.isRead) && (
-          <Badge>{notifications.filter((n) => !n.isRead).length}</Badge>
+        {notifications.some((n) => !n.is_read) && (
+          <Badge>{notifications.filter((n) => !n.is_read).length}</Badge>
         )}
       </IconButton>
       {open && (
         <Dropdown tabIndex={-1}>
           {notifications.length === 0 ? (
-            <Item isRead={true}>No notifications</Item>
+            <Item is_read={true}>No notifications</Item>
           ) : (
             notifications.map((notification) => (
-              <Item key={notification.id} isRead={notification.isRead}>
+              <Item key={notification.id} is_read={notification.is_read}>
                 <Message>{notification.message}</Message>
-                <Time>{format(parseISO(notification.createdAt), 'PPpp')}</Time>
-                {!notification.isRead && (
-                  <MarkReadButton onClick={() => handleMarkRead(notification.id)}>
+                <Time>{format(parseISO(notification.created_at), 'PPpp')}</Time>
+                {!notification.is_read && (
+                  <MarkReadButton onClick={() => handleMark(notification.id)}>
                     Mark as read
                   </MarkReadButton>
                 )}

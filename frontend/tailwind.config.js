@@ -14,9 +14,9 @@ module.exports = {
         primary: ['Inter', 'sans-serif'],
       },
       borderRadius: {
-        sm: '0.4rem',
-        md: '0.8rem',
-        lg: '1.2rem',
+        sm: '2px',
+        md: '4px',
+        lg: '6px',
         round: '50%',
       },
       boxShadow: {

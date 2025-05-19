@@ -29,9 +29,9 @@ const darkTheme: DefaultTheme = {
     small: '0.875rem',
   },
   radii: {
-    sm: '0.4rem',
-    md: '0.8rem',
-    lg: '1.2rem',
+    sm: '2px',
+    md: '4px',
+    lg: '6px',
     round: '50%',
   },
   shadows: {

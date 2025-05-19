@@ -7,8 +7,8 @@ import { format, parseISO } from 'date-fns';
 // Styled components
 const ListContainer = styled.div`
   background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   padding: 1.5rem;
   margin-bottom: 2rem;
 `;
@@ -27,7 +27,7 @@ const RequestsList = styled.div`
 
 const RequestItem = styled.div<{ status: string }>`
   border: 1px solid #eee;
-  border-radius: 8px;
+  border-radius: 4px;
   padding: 1rem;
   background-color: ${props => {
     switch (props.status) {
@@ -89,12 +89,12 @@ const CancelButton = styled.button`
   font-size: 0.75rem;
   cursor: pointer;
   transition: all 0.2s;
-  
+
   &:hover {
     background-color: #f44336;
     color: white;
   }
-  
+
   &:disabled {
     opacity: 0.5;
     cursor: not-allowed;
@@ -130,14 +130,14 @@ const TimeOffRequestList = ({ refreshTrigger = 0 }: TimeOffRequestListProps) => 
   const [requests, setRequests] = useState<TimeOffRequest[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  
+
   // Load time-off requests
   useEffect(() => {
     const fetchRequests = async () => {
       try {
         setLoading(true);
         setError(null);
-        
+
         const data = await ScheduleService.getTimeOffRequests();
         setRequests(data);
       } catch (err: any) {
@@ -147,17 +147,17 @@ const TimeOffRequestList = ({ refreshTrigger = 0 }: TimeOffRequestListProps) => 
         setLoading(false);
       }
     };
-    
+
     fetchRequests();
   }, [refreshTrigger]);
-  
+
   // Handle cancellation of a time-off request
   const handleCancelRequest = async (id: string) => {
     try {
       await ScheduleService.cancelTimeOffRequest(id);
-      
+
       // Update the local state
-      setRequests(prevRequests => 
+      setRequests(prevRequests =>
         prevRequests.filter(request => request.id !== id)
       );
     } catch (err: any) {
@@ -165,22 +165,22 @@ const TimeOffRequestList = ({ refreshTrigger = 0 }: TimeOffRequestListProps) => 
       setError(err.message || 'Failed to cancel time-off request');
     }
   };
-  
+
   // Format date from ISO string
   const formatDate = (isoString: string) => {
     return format(parseISO(isoString), 'MMMM d, yyyy');
   };
-  
+
   if (loading) {
     return <LoadingMessage>Loading time-off requests...</LoadingMessage>;
   }
-  
+
   return (
     <ListContainer>
       <ListTitle>Your Time-Off Requests</ListTitle>
-      
+
       {error && <ErrorMessage>{error}</ErrorMessage>}
-      
+
       {requests.length === 0 ? (
         <NoRequestsMessage>You have no time-off requests.</NoRequestsMessage>
       ) : (
@@ -195,12 +195,12 @@ const TimeOffRequestList = ({ refreshTrigger = 0 }: TimeOffRequestListProps) => 
                   {request.status}
                 </RequestStatus>
               </RequestHeader>
-              
+
               <RequestReason>{request.reason}</RequestReason>
-              
+
               <RequestFooter>
                 <div>Requested on {formatDate(request.created_at)}</div>
-                
+
                 {request.status === 'pending' && (
                   <CancelButton onClick={() => handleCancelRequest(request.id)}>
                     Cancel Request
