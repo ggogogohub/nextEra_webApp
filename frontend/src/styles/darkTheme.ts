@@ -3,20 +3,20 @@ import { DefaultTheme } from 'styled-components';
 const darkTheme: DefaultTheme = {
   colors: {
     coralRed: '#E63946',
-    offWhite: '#F1FAEE',
+    offWhite: '#1D2330',
     lightCyan: '#A8DADC',
-    darkBlue: '#457B9D',
-    deepNavy: '#1D3557',
+    darkBlue: '#27304A',
+    deepNavy: '#F1FAEE',
     brightTeal: '#02C39A',
-    // Dark mode specific overrides
-    background: '#1D2330', // deep navy-ish
-    card: '#232B3E',
-    surface: '#27304A',
-    text: '#F1FAEE',
-    textSecondary: '#A8DADC',
-    border: '#2C3550',
-    glass: 'rgba(36, 48, 80, 0.7)',
-    glassBlur: 'blur(16px)',
+    // The following are for reference only, not part of DefaultTheme:
+    // background: '#1D2330',
+    // card: '#232B3E',
+    // surface: '#27304A',
+    // text: '#F1FAEE',
+    // textSecondary: '#A8DADC',
+    // border: '#2C3550',
+    // glass: 'rgba(36, 48, 80, 0.7)',
+    // glassBlur: 'blur(16px)',
   },
   fonts: {
     primary: "'Inter', sans-serif",
