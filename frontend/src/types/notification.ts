@@ -5,4 +5,5 @@ export interface Notification {
   employee_id: string;
   is_read: boolean;
   created_at: string;
+  type?: 'info' | 'success' | 'warning' | 'error';
 }

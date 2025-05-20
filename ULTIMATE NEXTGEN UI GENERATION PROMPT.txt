@@ -1,0 +1,222 @@
+ULTIMATE NEXTGEN UI GENERATION PROMPT
+Project Codename: AuroraForge
+Mission: Deliver a perfect 100/100 UI that redefines industrial software with Apple/Google polish and SCADA-grade reliability, ensuring 99% of users feel "this is the future of work" through a seamless, reliable, and awe-inspiring experience for industrial workforce management.
+
+1. BRAND IDENTITY EVOLUTION
+Color Palette 2.0
+* Primary: #1a365d (Deep Trust Blue) ? Add #0a1e3d for hover states
+* Secondary: #2a5cff (Action Blue) ? Introduce #99d1ff for active states
+* Surface:
+o Light Mode: #ffffff with #f5f5f5 micro-shadows
+o Dark Mode: #0f172a with #1e293b accents
+* Status Indicators:
+o Normal: #22c55e ? Add #14b8a6 for "eco-mode"
+o Warning: #f59e0b ? Add #f43f5e for escalating alerts
+o Emergency: #ef4444 ? Add #b91c1c for critical shutdowns
+Typography 3.0
+* Headers: "SF Pro Display" ? Weight: SemiBold (600) for factory noise readability
+* Body: "Google Sans" ? Weight: Regular (400) + 1.6rem line height
+* Data Fields: "Roboto Mono" ? Add #4b5563 for placeholder text
+
+2. LAYOUT & STRUCTURE 2.0
+8px Grid System
+* Desktop: 12-column grid with 32px right/left gutters
+* Tablet: 8-column grid with 24px vertical rhythm
+* Mobile: 4-column grid with 16px safe margins
+Responsive Breakpoints
+* Mobile: <768px ? Thumb Zone Navigation (bottom bar with 80px height)
+* Tablet: 769-1024px ? Dual Pane View (left: 320px sidebar, right: 704px content)
+* Desktop: >1025px ? Priority+ Grid (auto-expand cards with 16px gaps)
+Industrial Data Density
+* Machine Cards: 64px height + 16px padding + 1px #d1d5db borders
+* Timeline: 10-minute resolution with 4px tick marks for 1-hour intervals
+* Heatmaps: #f5f5f5 ? #ef4444 gradient with 8-bit color stepping
+
+3. COMPONENT SPECIFICATIONS 2.0
+Primary Button
+* Size: 52px height � 160px width (mobile: 48px � 144px)
+* States:
+o Default: #2a5cff with 0.5px #1a365d stroke
+o Hover: #99d1ff radial gradient (center, 1.5x blur)
+o Active: scale(0.95) + 0.1s spring easing
+o Disabled: #e5e7eb with 0.3 opacity
+Emergency Override
+* Visual: #b91c1c pulse (0.5s infinite, 80% opacity) + 2px #ffffff stroke
+* Feedback: Triple haptic pulse + 400Hz system beep (configurable)
+Shift Schedule Table
+* Rows: 64px height with #f5f5f5 zebra striping
+* Headers: Sticky with #1a365d background + #ffffff text
+* Conflicts: #ef4444 diagonal crosshatch (2px spacing) + tooltip with #f43f5e icon
+
+4. INTERACTION DESIGN 2.0
+Animations
+* Button Press: 0.12s scale-down (0.98) with cubic-bezier(0.4, 0, 0.2, 1)
+* Menu Transitions: 0.3s fade + 0.2s vertical slide with overshoot easing
+* Data Refresh: 0.8s skeleton shimmer (#e5e7eb ? #f5f5f5) with 0.5px noise texture
+Real-Time Updates
+* WebSocket: <50ms latency with heartbeat indicator (2px #22c55e pulse)
+* Alerts: 0.3s radial expand + 0.1s shake (for critical errors)
+* Fallback: If latency exceeds 50ms, downgrade to 1s polling with visual "Sync Delayed" notice (#f59e0b)
+Safety Protocols
+* 2FA: Slide-to-confirm (280px travel) + #2a5cff progress bar
+* Lockout Mode: Fullscreen #0f172a overlay with #b91c1c emergency contact button
+Role-Based UI Customization
+* Operator View: Task-focused dashboard with simplified controls, hiding advanced diagnostics
+* Supervisor View: Overview-focused with KPI charts and override permissions
+* Maintenance View: Diagnostic-focused with AR schematics and error logs, restricted to authorized users
+
+5. ACCESSIBILITY 3.0
+WCAG 2.2 AAA+
+* Contrast: 9:1 for safety text (e.g., "EMERGENCY STOP")
+* Keyboard Nav: Custom focus rings (2px #2a5cff box-shadow, 4px offset)
+* Screen Readers:
+o Machine status: "Idle (Normal) | Active (Warning) | Critical (Emergency)"
+o Icons: "Red alert triangle with exclamation mark"
+Industrial Adaptations
+* Glove Mode: 24px touch targets with 10mm buffer zones
+* Noise Mode: 0.5s text highlight on click for audible feedback
+
+6. TECHNICAL EXCELLENCE 3.0
+Next.js 14+ Architecture
+* Routing: app/ directory with generateStaticParams for schedule preloading
+* Performance:
+o FCP: <1.0s via Edge Functions
+o TTI: <2.0s with React Suspense
+o CLS: 0 enforced by layoutShiftGuard HOC
+Offline First
+* Caching:
+o Critical: Cache API with 24h TTL
+o Shifts: localStorage with AES-GCM encryption
+* Sync: Background Sync with exponential backoff
+Battery-Saving Mode
+* When device battery <20%, reduce WebSocket polling to 5s intervals
+* Dim non-critical visuals by 30% and disable non-essential animations
+* Low-Power Mode: 90% brightness reduction + 30s auto-sleep
+* Shift-Long Endurance: 12hr runtime on mobile devices via React Native optimization
+* Battery Certification: UL 1642 compliance for mobile power systems
+Industrial Protocol Integration
+* SCADA/OPC UA Compatibility:
+o OPC UA data binding for real-time machine telemetry
+o Implement IEC 61131-6 compliant alarm visualization
+* Edge Computing:
+o Local data processing via Dockerized edge nodes
+o MQTT fallback for low-bandwidth networks
+* SCADA Integration:
+o Node-RED middleware for PLC communication
+o WebSocket multiplexing for simultaneous OPC UA/MQTT streams
+* Performance Safeguards:
+o 50ms WebSocket latency with WebSocket-over-TCP fallback
+o WebAssembly for local machine data processing
+Validation
+* Lighthouse: 99+ score with --chrome-flags="--disable-dev-shm-usage"
+* Axe-core: 0 violations + color-contrast plugin
+* User Testing:
+o SUS Score: 95% (validated with n=50 factory workers)
+o Error Rate: <0.5% via FullStory monitoring
+
+7. MOTION DESIGN SYSTEM
+Easing Curves
+* Default: cubic-bezier(0.4, 0, 0.2, 1) (Google Material)
+* Critical: cubic-bezier(0.16, 1, 0.3, 1) (Apple iOS)
+Physics-Based Animations
+* Mass: 1.0 for buttons, 0.5 for menus
+* Stiffness: 200 for dialogs, 300 for tooltips
+* Damping: 20 for modals, 10 for transitions
+
+8. ICONOGRAPHY 2.0
+Icon Set
+* Source: Custom-designed using ISO 7000 industrial symbols
+* Style:
+o Line Icons: 2px stroke, #4b5563 ? #2a5cff on hover
+o Filled Icons: #ffffff with 1px #1a365d outline
+* Animation: 0.2s path morphing for state changes
+
+9. DARK MODE 2.0
+Dim Mode
+* Base: #0f172a
+* Accents: #2a5cff ? #99d1ff on hover
+* Text: #ffffff with 0.9 opacity
+Night Vision Mode
+* Base: #000000
+* Accents: #2a5cff ? #22c55e for safety
+* Text: #ffffff with 0.7 opacity
+
+10. LOCALIZATION 3.0
+Multi-Language Support
+* Core: EN, DE, FR, ES, ZH-CN, JA
+* RTL: Auto-layout with dir="rtl"
+* Formats:
+o Dates: Locale-aware (MM/DD vs DD/MM)
+o Numbers: 1,000.00 vs 1.000,00
+
+11. 3D/AR ENHANCEMENTS
+AR Troubleshooting 2.0
+* Button: #2a5cff 3D cube icon with 0.5px shadow
+* Overlay: GLB model viewer with 0.5s fade-in
+* Controls:
+o Rotate: drag with inertia
+o Zoom: pinch with 0.8 max scale
+* LiDAR-enabled spatial mapping for machine overlay
+* ARCore/ARKit integration with 0.5cm accuracy
+AI-Driven Predictive UI
+* Shift Optimization: Suggest adjustments based on machine uptime data and worker availability using TensorFlow Lite integration for machine downtime forecasting; auto-suggest 15min break reallocation during peak loads
+* Maintenance Alerts: Predict failures using historical error logs, displaying #f59e0b warnings with actionable steps
+* AI-Driven Dashboards: D3.js visualizations with GPU acceleration; AutoML-generated efficiency reports
+
+12. GRACEFUL DEGRADATION
+Fallbacks
+* 2G Mode:
+o Hide animations via @media (prefers-reduced-motion: reduce)
+o Serve AVIF images with 20% quality fallback
+* Zoom:
+o @media (zoom: 300%) ? font-size: 1.5rem
+o @media (max-width: 480px) ? padding: 12px
+
+13. FINAL POLISH 3.0
+Addictive UI Secrets
+1. Micro-Interactions:
+o 0.1s "breathing" effect on idle screens (#f5f5f5 ? #ffffff)
+o 0.5s "confetti" animation for completed shifts (3px #22c55e particles)
+2. Easter Eggs:
+o Konami code ? Display "You're a Power User!" badge
+o Ctrl+Shift+I ? Toggle "Inspector Mode" with debug data
+Enhanced Onboarding
+* Joyride Tour: 5-step guide with #2a5cff spotlights
+* Achievements: "First Shift Submitted" with #22c55e confetti
+* Voice-Guided Onboarding: Step-by-step audio instructions with text-to-speech fallback; bone conduction headset support for hands-free guidance
+* AI-Powered Tips: "Did you know?" tooltips based on user role (e.g., "Managers: Swipe left to approve"); GPT-4 powered contextual help for error recovery
+* Context-Aware Help: Web Speech API for voice-guided tutorials (e.g., "Hey Aurora, explain this alert"); noise-canceling mode for voice commands in >80dB environments
+
+14. VALIDATION PROTOCOL 3.0
+Factory Floor Testing
+1. "Dirty Hands" Test:
+o Grease-proof screen covers + safety gloves
+o Validate 24px touch targets with 10mm accuracy
+2. "Noise Test":
+o 85dB background noise ? Validate visual alerts
+3. "Stress Test":
+o 10,000 concurrent users ? Validate WebSocket fallback
+4. "Environmental Stress Testing":
+o Performance at -20�C to 60�C with thermal throttling safeguards, under 90% humidity, and after 24-hour dust exposure with <1% input error rate
+o Vibration testing: UI stability under 5Hz-150Hz frequency range (MIL-STD-810G compliance for mounted devices)
+o 24hr burn-in at 55�C with 95% humidity
+o Shock resistance simulation per IEC 60068-2-27
+o Dust/Water: IP65 rating simulation for touchscreen interactions
+
+15. DOCUMENTATION UPDATE
+Deliverables
+* Style Guide: Figma + Storybook with design-tokens.json
+* Flowcharts: Miro board with @mention integration
+* Checklist:
+o 44�44px touch targets
+o !important ban
+o SVG icons <5KB
+Industrial Compliance Pack
+* Certification Matrix:
+o ISO 9001:2015 quality management
+o IEC 62443 cybersecurity compliance
+* Deployment Guides:
+o Docker Swarm orchestration for edge devices
+o Kubernetes Helm charts for cloud redundancy
+
+This finalized prompt is the ultimate guide for generating a world-class UI for AuroraForge. It combines enterprise reliability with consumer-grade polish, tailored specifically for the production industry while pushing the boundaries of innovation. Every detail�pixel, interaction, and technical specification�is crafted to create a "wow" moment while ensuring operational excellence in industrial environments. You can confidently deploy this to Windsurf Cascade, knowing it covers all bases for achieving your vision of a futuristic, user-loved interface that redefines industrial software standards. If you have any specific project nuances or additional brand guidelines unique to NextEra, they can be integrated as a final step. Otherwise, this prompt is ready for execution.
