@@ -3,28 +3,56 @@ import 'styled-components';
 declare module 'styled-components' {
   export interface DefaultTheme {
     colors: {
-      coralRed: string;
-      offWhite: string;
-      lightCyan: string;
-      darkBlue: string;
-      deepNavy: string;
-      brightTeal: string;
-    };
-    fonts: {
       primary: string;
+      secondary: string;
+      background: {
+        default: string;
+        hover: string;
+        active: string;
+      };
+      text: {
+        primary: string;
+        secondary: string;
+        tertiary: string;
+        inverse: string;
+        disabled: string;
+      };
+      error: string;
+      warning: string;
+      success: string;
+      info: string;
     };
-    fontSizes: {
-      h1: string;
-      h2: string;
-      h3: string;
-      body: string;
-      small: string;
-    };
-    radii: {
+    spacing: {
+      xs: string;
       sm: string;
+      base: string;
       md: string;
       lg: string;
-      round: string;
+      xl: string;
+    };
+    typography: {
+      fontSize: {
+        xs: string;
+        sm: string;
+        base: string;
+        md: string;
+        lg: string;
+        xl: string;
+      };
+      fontWeight: {
+        normal: number;
+        medium: number;
+        semibold: number;
+        bold: number;
+      };
+    };
+    borderRadius: {
+      none: string;
+      sm: string;
+      base: string;
+      md: string;
+      lg: string;
+      full: string;
     };
     shadows: {
       sm: string;
@@ -32,7 +60,9 @@ declare module 'styled-components' {
       lg: string;
     };
     transitions: {
-      default: string;
+      fast: string;
+      normal: string;
+      slow: string;
     };
   }
 }

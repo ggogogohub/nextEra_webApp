@@ -1,14 +1,20 @@
-import api from './api';
-import { Notification } from '../types/notification';
+import api from '../utils/api';
+import { apiConfig } from '../config/api.config';
+import { Notification } from '../components/notifications/NotificationIcon/types';
 
-export const NotificationService = {
+class NotificationService {
   async getNotifications(): Promise<Notification[]> {
-    const response = await api.get<Notification[]>('/notifications');
+    const response = await api.get<Notification[]>(apiConfig.endpoints.notifications.list);
     return response.data;
-  },
+  }
 
-  async markAsRead(id: string, is_read: boolean): Promise<Notification> {
-    const response = await api.put<Notification>(`/notifications/${id}`, { is_read });
-    return response.data;
-  },
-};
+  async markAsRead(id: string): Promise<void> {
+    await api.post(apiConfig.endpoints.notifications.markRead(id));
+  }
+
+  async markAllAsRead(): Promise<void> {
+    await api.post(apiConfig.endpoints.notifications.markAllRead);
+  }
+}
+
+export const notificationService = new NotificationService();

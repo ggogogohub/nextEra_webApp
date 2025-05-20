@@ -1,8 +1,8 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { AuthProvider } from './contexts/AuthContext';
-import Layout from './components/Layout';
-import ProtectedRoute from './components/ProtectedRoute';
+import { AuthProvider } from './contexts/AuthContext/AuthProvider';
+import Layout from './components/layout/Layout';
+import ProtectedRoute from './components/layout/ProtectedRoute';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
@@ -33,21 +33,17 @@ function App() {
               <Route path="/" element={<Landing />} />
 
               {/* Protected routes */}
-              <Route element={<ProtectedRoute />}>
-                <Route path="/dashboard" element={<Dashboard />} />
-                <Route path="/profile" element={<Profile />} />
-                <Route path="/schedules" element={<SchedulesPage />} />
-                <Route path="/notifications" element={<NotificationsPage />} />
-              </Route>
+              <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+              <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+              <Route path="/schedules" element={<ProtectedRoute><SchedulesPage /></ProtectedRoute>} />
+              <Route path="/notifications" element={<ProtectedRoute><NotificationsPage /></ProtectedRoute>} />
 
               {/* Admin routes */}
-              <Route element={<ProtectedRoute allowedRoles={['admin']} />}>
-                <Route path="/admin" element={<Admin />} />
-                <Route path="/admin/users/new" element={<NewUser />} />
-                <Route path="/admin/users/:id" element={<UserDetail />} />
-                <Route path="/admin/users" element={<UsersPage />} />
-                <Route path="/admin/roles" element={<RolesPage />} />
-              </Route>
+              <Route path="/admin" element={<ProtectedRoute allowedRoles={['admin']}><Admin /></ProtectedRoute>} />
+              <Route path="/admin/users/new" element={<ProtectedRoute allowedRoles={['admin']}><NewUser /></ProtectedRoute>} />
+              <Route path="/admin/users/:id" element={<ProtectedRoute allowedRoles={['admin']}><UserDetail /></ProtectedRoute>} />
+              <Route path="/admin/users" element={<ProtectedRoute allowedRoles={['admin']}><UsersPage /></ProtectedRoute>} />
+              <Route path="/admin/roles" element={<ProtectedRoute allowedRoles={['admin']}><RolesPage /></ProtectedRoute>} />
 
               {/* Unauthorized route */}
               <Route path="/unauthorized" element={<Unauthorized />} />
