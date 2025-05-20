@@ -48,7 +48,7 @@ const NotificationsPage = () => {
   const handleMarkRead = async (id: string) => {
     try {
       await notificationService.markAsRead(id, true);
-      setNotifications(prev => prev.map(n => n.id === id ? { ...n, is_read: true } : n));
+      setNotifications(prev => prev.map(n => n.id === id ? { ...n, isRead: true } : n));
     } catch (e) {
       console.error(e);
     }
@@ -62,7 +62,7 @@ const NotificationsPage = () => {
         <div>No notifications</div>
       ) : (
         notifications.map(n => (
-          <NotificationItem key={n.id} read={n.is_read} onClick={() => handleMarkRead(n.id)}>
+          <NotificationItem key={n.id} read={n.isRead} onClick={() => handleMarkRead(n.id)}>
             <p>{n.message}</p>
             <small>{new Date(n.created_at).toLocaleString()}</small>
           </NotificationItem>
