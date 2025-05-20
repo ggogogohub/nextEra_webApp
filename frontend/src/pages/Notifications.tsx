@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Notification } from '../types/notification';
-import { NotificationService } from '../services/notification.service';
+import { notificationService } from '../services/notification.service';
 
 const Container = styled.div`
   padding: 2rem;
@@ -35,7 +35,7 @@ const NotificationsPage = () => {
   useEffect(() => {
     const fetch = async () => {
       try {
-        const data = await NotificationService.getNotifications();
+        const data = await notificationService.getNotifications();
         setNotifications(data);
       } catch (e) {
         console.error(e);
@@ -47,7 +47,7 @@ const NotificationsPage = () => {
 
   const handleMarkRead = async (id: string) => {
     try {
-      await NotificationService.markAsRead(id, true);
+      await notificationService.markAsRead(id, true);
       setNotifications(prev => prev.map(n => n.id === id ? { ...n, is_read: true } : n));
     } catch (e) {
       console.error(e);
