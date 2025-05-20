@@ -8,7 +8,6 @@ const GlobalStyles = createGlobalStyle`
     --color-dark-blue: ${({ theme }) => theme.colors.darkBlue};
     --color-deep-navy: ${({ theme }) => theme.colors.deepNavy};
     --color-bright-teal: ${({ theme }) => theme.colors.brightTeal};
-    --font-primary: ${({ theme }) => theme.fonts.primary};
   }
 
   [data-theme='dark'] {
@@ -18,7 +17,6 @@ const GlobalStyles = createGlobalStyle`
     --color-deep-navy: #F1FAEE;
     --color-bright-teal: #02C39A;
     --color-coral-red: #E63946;
-    --font-primary: ${({ theme }) => theme.fonts.primary};
     background-color: #1D2330;
     color: #F1FAEE;
   }
@@ -30,12 +28,19 @@ const GlobalStyles = createGlobalStyle`
   }
 
   body {
-    font-family: var(--font-primary);
-    font-size: ${({ theme }) => theme.fontSizes.body};
-    line-height: 1.5;
-    color: var(--color-deep-navy);
+    font-family: 'Google Sans', sans-serif;
+    line-height: 1.6rem;
+    font-weight: ${({ theme }) => theme.typography.fontWeight.normal};
+    color: ${({ theme }) => theme.colors.text.primary};
+    font-size: ${({ theme }) => theme.typography.fontSize.base};
     background-color: var(--color-off-white);
     transition: background 0.3s, color 0.3s;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'SF Pro Display', sans-serif;
+    font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
+    color: ${({ theme }) => theme.colors.text.primary};
   }
 
   a {

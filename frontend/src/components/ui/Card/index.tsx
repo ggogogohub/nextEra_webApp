@@ -1,5 +1,5 @@
 import React from 'react';
-import { CardContainer, CardContent, CardHeader } from './styles';
+import { CardContainer, CardContent, CardHeader } from './styles.ts';
 
 interface CardProps {
   title?: string;

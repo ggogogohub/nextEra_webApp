@@ -183,7 +183,7 @@ const Register = () => {
       setError(null);
 
       // Remove confirmPassword as it's not needed for the API
-      const { confirmPassword, ...registerData } = values;
+      const { ...registerData } = values;
 
       // Ensure role is one of the allowed values
       if (!['employee', 'manager', 'admin'].includes(registerData.role)) {
@@ -215,9 +215,9 @@ const Register = () => {
       setTimeout(() => {
         navigate('/login');
       }, 2000);
-    } catch (error: any) {
+    } catch (error: Error | unknown) {
       console.error('Registration error:', error);
-      setError(error.response?.data?.detail || 'Registration failed. Please try again.');
+      setError(error instanceof Error ? error.message : 'Registration failed. Please try again.');
     } finally {
       setSubmitting(false);
     }

@@ -47,7 +47,7 @@ const NotificationsPage = () => {
 
   const handleMarkRead = async (id: string) => {
     try {
-      await notificationService.markAsRead(id, true);
+      await notificationService.markAsRead(id);
       setNotifications(prev => prev.map(n => n.id === id ? { ...n, isRead: true } : n));
     } catch (e) {
       console.error(e);
