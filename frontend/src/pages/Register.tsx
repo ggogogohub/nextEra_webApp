@@ -243,7 +243,7 @@ const Register = () => {
             validationSchema={RegisterSchema}
             onSubmit={handleSubmit}
           >
-            {({ isSubmitting, isValid, dirty, values, setFieldValue }) => (
+            {({ isSubmitting, isValid, dirty, setFieldValue }) => (
               <Form onChange={() => setError(null)} style={{ width: '100%' }}>
                 <FormGroup>
                   <Label htmlFor="email">Email</Label>
