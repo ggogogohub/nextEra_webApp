@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import { useAuth } from '../contexts/AuthContext';
+import { useAuth } from '../hooks/useAuth';
 import ScheduleCalendar from '../components/schedule/ScheduleCalendar';
 import TimeOffRequestForm from '../components/schedule/TimeOffRequestForm';
 import TimeOffRequestList from '../components/schedule/TimeOffRequestList';

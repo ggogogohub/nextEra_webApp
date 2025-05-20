@@ -5,6 +5,12 @@ declare module 'styled-components' {
     colors: {
       primary: string;
       secondary: string;
+      deepNavy: string;
+      darkBlue: string;
+      brightTeal: string;
+      offWhite: string;
+      coralRed: string;
+      lightCyan: string;
       background: {
         default: string;
         hover: string;

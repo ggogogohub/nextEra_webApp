@@ -4,6 +4,12 @@ export const theme: DefaultTheme = {
   colors: {
     primary: '#1a365d',
     secondary: '#2a5cff',
+    deepNavy: '#1a365d',
+    darkBlue: '#0a1e3d',
+    brightTeal: '#2a5cff',
+    offWhite: '#ffffff',
+    coralRed: '#ef4444',
+    lightCyan: '#99d1ff',
     background: {
       default: '#ffffff',
       hover: '#f5f5f5',

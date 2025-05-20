@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import styled from 'styled-components';
-import { useAuth } from '../../contexts/AuthContext';
+import { useAuth } from '../../hooks/useAuth';
 import api from '../../services/api';
 
 // Validation schema
@@ -121,9 +121,9 @@ const ProfileForm = () => {
       await api.put(`/users/${user.id}`, values);
 
       setSuccess('Profile updated successfully!');
-    } catch (err: any) {
+    } catch (err: Error | unknown) {
       console.error('Error updating profile:', err);
-      setError(err.response?.data?.detail || 'Failed to update profile');
+      setError(err instanceof Error ? err.message : 'Failed to update profile');
     }
   };
 
