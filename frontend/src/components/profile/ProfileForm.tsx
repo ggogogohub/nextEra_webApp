@@ -4,6 +4,7 @@ import * as Yup from 'yup';
 import styled from 'styled-components';
 import { useAuth } from '../../hooks/useAuth';
 import api from '../../services/api';
+import { apiConfig } from '../../config/api.config';
 
 // Validation schema
 const ProfileSchema = Yup.object().shape({
@@ -118,7 +119,7 @@ const ProfileForm = () => {
       setError(null);
       setSuccess(null);
 
-      await api.put(`/users/${user.id}`, values);
+      await api.put(apiConfig.endpoints.users.update(user.id), values);
 
       setSuccess('Profile updated successfully!');
     } catch (err: Error | unknown) {

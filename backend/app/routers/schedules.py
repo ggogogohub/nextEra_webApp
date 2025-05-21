@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 from typing import List, Optional
-from fastapi import APIRouter, Depends, HTTPException, Query, status, Path
+from fastapi import APIRouter, Depends, HTTPException, Query, status, Path # type: ignore
 from bson import ObjectId
 
 from app.utils.database import get_database
@@ -253,11 +253,17 @@ async def get_availability(
     """
     db = get_database()
 
-    availability = await db.availability.find({
+    availability_docs = await db.availability.find({
         "employee_id": str(current_user["_id"])
     }).to_list(length=7)  # Maximum 7 days in a week
 
-    return availability
+    # Map Mongo documents to Pydantic models, ensuring _id is mapped to id
+    availability_responses: List[AvailabilityResponse] = []
+    for doc in availability_docs:
+        doc['id'] = str(doc['_id'])
+        availability_responses.append(AvailabilityResponse.model_validate(doc))
+
+    return availability_responses
 
 @router.post("/availability", response_model=AvailabilityResponse)
 async def create_availability(
@@ -344,4 +350,6 @@ async def update_availability(
             "day_of_week": day_of_week
         })
 
-    return updated_availability
+    # Map Mongo document to Pydantic model
+    data = {**updated_availability, 'id': str(updated_availability['_id'])}
+    return AvailabilityResponse.model_validate(data)

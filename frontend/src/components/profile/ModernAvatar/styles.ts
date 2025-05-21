@@ -45,6 +45,14 @@ export const AvatarCircle = styled.button`
   &:hover img, &:focus img {
     transform: scale(1);
   }
+  
+  svg {
+    display: block;
+    width: 20px;
+    height: 20px;
+    color: #ffffff;
+    fill: #ffffff;
+  }
 `;
 
 export const Status = styled.div<{ status: 'online' | 'busy' | 'away' | 'offline' }>`
@@ -116,6 +124,9 @@ export const ProfileImage = styled.div`
   margin-bottom: 12px;
   border: 2px solid rgba(42, 92, 255, 0.2);
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   
   img {
     width: 100%;
@@ -132,6 +143,14 @@ export const ProfileImage = styled.div`
     bottom: 0;
     box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
     border-radius: 50%;
+  }
+  
+  svg {
+    display: block;
+    width: 32px;
+    height: 32px;
+    color: #ffffff;
+    fill: #ffffff;
   }
 `;
 

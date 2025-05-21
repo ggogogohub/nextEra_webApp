@@ -5,6 +5,7 @@ import * as Yup from 'yup';
 import styled from 'styled-components';
 import { UserService } from '../../services/user.service';
 import { User } from '../../types/auth';
+import { UserProfileUpdate } from '../../types/user';
 
 // Validation schema for editing user
 const UserSchema = Yup.object().shape({
@@ -141,8 +142,12 @@ const UserDetail = () => {
         setLoading(true);
         const userData = id ? await UserService.getUser(id) : null;
         setUser(userData);
-      } catch (err: any) {
-        setError(err.response?.data?.detail || err.message || 'Failed to load data');
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          setError(err.message);
+        } else {
+          setError('Failed to load data');
+        }
       } finally {
         setLoading(false);
       }
@@ -161,8 +166,12 @@ const UserDetail = () => {
         await UserService.activateUser(id);
       }
       navigate('/admin/users');
-    } catch (err: any) {
-      setError(err.response?.data?.detail || err.message || 'Failed to update user status');
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError('Failed to update user status');
+      }
     } finally {
       setSubmitting(false);
     }
@@ -190,14 +199,18 @@ const UserDetail = () => {
             if (!id) return;
             try {
               setSubmitting(true);
-              const updateData = { email: values.email, first_name: values.first_name, last_name: values.last_name, role: values.role };
+              const updateData: UserProfileUpdate = { email: values.email, first_name: values.first_name, last_name: values.last_name, role: values.role };
               const updatedUser = await UserService.updateUser(id, updateData);
               setUser(updatedUser);
               resetForm({ values: { email: updatedUser.email, first_name: updatedUser.first_name, last_name: updatedUser.last_name, role: updatedUser.role } });
               setSuccess('User updated successfully!');
               setTimeout(() => navigate('/admin/users'), 1000);
-            } catch (err: any) {
-              setError(err.response?.data?.detail || err.message || 'Failed to update user');
+            } catch (err: unknown) {
+              if (err instanceof Error) {
+                setError(err.message);
+              } else {
+                setError('Failed to update user');
+              }
             } finally {
               setSubmitting(false);
             }

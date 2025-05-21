@@ -22,4 +22,8 @@ export interface UserProfileUpdate {
   first_name?: string;
   last_name?: string;
   role?: string;
+}
+
+export interface Role {
+  name: string;
 } 

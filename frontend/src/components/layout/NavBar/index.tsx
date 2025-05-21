@@ -12,9 +12,11 @@ import {
   CTAButton,
   MobileMenu
 } from './styles';
+import { useAuth } from '../../../hooks/useAuth';
 
 const NavBar: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { isAuthenticated } = useAuth();
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -26,20 +28,36 @@ const NavBar: React.FC = () => {
         <Logo />
       </LogoContainer>
 
-      <NavLinks>
-        <NavLink to="/dashboard">Dashboard</NavLink>
-        <NavLink to="/schedule">Schedule</NavLink>
-        <NavLink to="/team">Team</NavLink>
-        <NavLink to="/reports">Reports</NavLink>
-      </NavLinks>
+      {isAuthenticated && (
+        <NavLinks>
+          <NavLink to="/dashboard">Dashboard</NavLink>
+          <NavLink to="/schedule">Schedule</NavLink>
+          <NavLink to="/team">Team</NavLink>
+          <NavLink to="/reports">Reports</NavLink>
+        </NavLinks>
+      )}
 
       <Actions>
-        <NotificationIcon />
-        <ModernAvatar />
-        <CTAButton to="/get-started">Get Started</CTAButton>
+        {isAuthenticated && <NotificationIcon />}
+        {isAuthenticated && <ModernAvatar />}
+
+        {!isAuthenticated && <CTAButton to="/login">Get Started</CTAButton>}
       </Actions>
 
-      <MobileMenuButton 
+      <MobileMenu isOpen={isMobileMenuOpen}>
+        {isAuthenticated ? (
+          <>
+            <NavLink to="/dashboard">Dashboard</NavLink>
+            <NavLink to="/schedule">Schedule</NavLink>
+            <NavLink to="/team">Team</NavLink>
+            <NavLink to="/reports">Reports</NavLink>
+          </>
+        ) : (
+          <CTAButton to="/login">Get Started</CTAButton>
+        )}
+      </MobileMenu>
+
+      <MobileMenuButton
         onClick={toggleMobileMenu}
         className={isMobileMenuOpen ? 'open' : ''}
         aria-label="Toggle mobile menu"
@@ -47,14 +65,6 @@ const NavBar: React.FC = () => {
       >
         <span />
       </MobileMenuButton>
-
-      <MobileMenu isOpen={isMobileMenuOpen}>
-        <NavLink to="/dashboard">Dashboard</NavLink>
-        <NavLink to="/schedule">Schedule</NavLink>
-        <NavLink to="/team">Team</NavLink>
-        <NavLink to="/reports">Reports</NavLink>
-        <CTAButton to="/get-started">Get Started</CTAButton>
-      </MobileMenu>
     </NavBarContainer>
   );
 };

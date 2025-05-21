@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { ProfileService } from '../../services/profile.service';
+import { ScheduleService } from '../../services/schedule.service';
 import { Availability, AvailabilityUpdate } from '../../types/schedule';
 
 const Container = styled.div`
@@ -73,7 +73,7 @@ const AvailabilityForm = () => {
 
   const fetchAvailability = async () => {
     try {
-      const data = await ProfileService.getAvailability();
+      const data = await ScheduleService.getAvailability();
       // Ensure one entry per day
       const filled = days.map((_, idx) => {
         const exist = data.find((a: Availability) => a.day_of_week === idx);
@@ -100,9 +100,29 @@ const AvailabilityForm = () => {
     fetchAvailability();
   }, []);
 
-  const handleChange = (index: number, field: keyof AvailabilityUpdate, value: any) => {
+  const handleChange = (
+    index: number,
+    field: keyof AvailabilityUpdate,
+    value: string | boolean,
+  ) => {
     const updated = [...items];
-    (updated[index] as any)[field] = value;
+    const itemToUpdate = { ...updated[index] };
+
+    if (field === 'is_available') {
+      if (typeof value === 'boolean') {
+        itemToUpdate[field] = value;
+      } else {
+        console.error('Invalid value type for is_available');
+      }
+    } else if (field === 'start_time' || field === 'end_time') {
+      if (typeof value === 'string') {
+        itemToUpdate[field] = value;
+      } else {
+        console.error('Invalid value type for start_time or end_time');
+      }
+    } // day_of_week is not changed via this handler
+
+    updated[index] = itemToUpdate;
     setItems(updated);
   };
 
@@ -117,8 +137,8 @@ const AvailabilityForm = () => {
         is_available: item.is_available,
       };
       // Update single day's availability
-      const updatedList = await ProfileService.upsertAvailability([upd]);
-      setItems(updatedList);
+      await ScheduleService.updateAvailability(upd);
+      fetchAvailability(); // Refetch all availability after successful save
       setError(null);
     } catch (e) {
       console.error(e);

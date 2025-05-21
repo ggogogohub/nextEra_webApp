@@ -22,6 +22,13 @@ export const apiConfig = {
       delete: (id: string) => `/api/v1/schedules/${id}`,
     },
     profile: '/api/v1/profile',
+    users: {
+      list: '/api/v1/users',
+      get: (id: string) => `/api/v1/users/${id}`,
+      create: '/api/v1/users',
+      update: (id: string) => `/api/v1/users/${id}`,
+      delete: (id: string) => `/api/v1/users/${id}`,
+    },
   },
   headers: {
     'Content-Type': 'application/json',

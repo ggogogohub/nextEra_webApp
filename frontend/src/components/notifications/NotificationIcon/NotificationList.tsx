@@ -1,4 +1,4 @@
-import React from 'react';
+import { forwardRef } from 'react';
 import { Notification } from '../../../types/notification';
 import {
   NotificationListContainer,
@@ -9,33 +9,39 @@ import {
   NotificationTime,
   NotificationActions,
   MarkAsReadButton,
-  EmptyState
+  EmptyState,
+  NotificationListFooter,
+  SeeAllLink
 } from './styles';
 
 interface NotificationListProps {
   notifications: Notification[];
-  onMarkAsRead: (id: string) => void;
+  onMarkAsRead: (id: string) => Promise<void>;
+  onSeeAllClick: () => void;
 }
 
-export const NotificationList: React.FC<NotificationListProps> = ({
-  notifications,
-  onMarkAsRead
-}) => {
+export const NotificationList = forwardRef<HTMLDivElement, NotificationListProps>((
+  { notifications, onMarkAsRead, onSeeAllClick },
+  ref
+) => {
+  const hasFooter = notifications.length > 0;
+
   if (notifications.length === 0) {
     return (
-      <EmptyState>
-        <p>No notifications</p>
-      </EmptyState>
+      <NotificationListContainer ref={ref}>
+        <EmptyState hasFooter={hasFooter}>
+          <p>No notifications</p>
+        </EmptyState>
+      </NotificationListContainer>
     );
   }
 
   return (
-    <NotificationListContainer>
+    <NotificationListContainer ref={ref}>
       {notifications.map((notification) => (
-        <NotificationItem 
+        <NotificationItem
           key={notification.id}
           isRead={notification.isRead}
-          onClick={() => onMarkAsRead(notification.id)}
         >
           <NotificationContent>
             <NotificationTitle>{notification.title}</NotificationTitle>
@@ -45,10 +51,10 @@ export const NotificationList: React.FC<NotificationListProps> = ({
             </NotificationTime>
           </NotificationContent>
           
-          {!notification.isRead && (
+          {!notification.isRead && notifications.length <= 5 && (
             <NotificationActions>
               <MarkAsReadButton
-                onClick={() => onMarkAsRead(notification.id)}
+                onClick={(e) => { e.stopPropagation(); onMarkAsRead(notification.id); }}
                 aria-label={`Mark ${notification.title} as read`}
               >
                 Mark as read
@@ -57,6 +63,14 @@ export const NotificationList: React.FC<NotificationListProps> = ({
           )}
         </NotificationItem>
       ))}
+
+      {hasFooter && (
+        <NotificationListFooter>
+          <SeeAllLink onClick={onSeeAllClick}>See all notifications</SeeAllLink>
+        </NotificationListFooter>
+      )}
     </NotificationListContainer>
   );
-}; 
+});
+
+NotificationList.displayName = 'NotificationList'; 
