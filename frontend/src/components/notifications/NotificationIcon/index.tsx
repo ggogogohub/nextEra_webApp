@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Bell } from 'lucide-react';
 import { NotificationList } from './NotificationList';
 import { NotificationContainer, NotificationBadge } from './styles';
 import { useNotification } from '../../../hooks/useNotification';
@@ -23,6 +24,7 @@ export const NotificationIcon: React.FC = () => {
   return (
     <NotificationContainer>
       <NotificationBadge onClick={() => setIsOpen(!isOpen)}>
+        <Bell size={24} />
         {unreadCount > 0 && <span>{unreadCount}</span>}
       </NotificationBadge>
       {isOpen && (

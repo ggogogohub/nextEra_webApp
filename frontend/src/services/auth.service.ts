@@ -1,5 +1,6 @@
 import api from './api';
 import { AuthTokens, LoginCredentials, RegisterCredentials, User } from '../types/auth';
+import { apiConfig } from '../config/api.config';
 
 export const AuthService = {
   /**
@@ -13,7 +14,7 @@ export const AuthService = {
     formData.append('username', credentials.email);
     formData.append('password', credentials.password);
 
-    const response = await api.post<AuthTokens>('/auth/login', formData, {
+    const response = await api.post<AuthTokens>(apiConfig.endpoints.auth.login, formData, {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
@@ -56,7 +57,7 @@ export const AuthService = {
     console.log('Final data being sent to API:', dataToSend);
     console.log('ROLE MUST BE PRESERVED:', dataToSend.role);
 
-    const response = await api.post<User>('/auth/register', dataToSend);
+    const response = await api.post<User>(apiConfig.endpoints.auth.register, dataToSend);
     console.log('Registration response:', response.data);
     return response.data;
   },
@@ -66,7 +67,7 @@ export const AuthService = {
    * @returns Promise with user data
    */
   async getCurrentUser(): Promise<User> {
-    const response = await api.get<User>('/auth/me');
+    const response = await api.get<User>(apiConfig.endpoints.auth.me);
     return response.data;
   },
 
@@ -81,7 +82,7 @@ export const AuthService = {
       throw new Error('No refresh token available');
     }
 
-    const response = await api.post<AuthTokens>('/auth/refresh', {
+    const response = await api.post<AuthTokens>(apiConfig.endpoints.auth.refresh, {
       refresh_token: refreshToken,
     });
 
@@ -100,7 +101,7 @@ export const AuthService = {
    */
   async logout(): Promise<void> {
     try {
-      await api.post('/auth/logout');
+      await api.post(apiConfig.endpoints.auth.logout);
     } catch (e) {
       console.warn('Logout request failed or server unavailable', e);
     }

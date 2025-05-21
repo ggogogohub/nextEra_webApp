@@ -75,37 +75,15 @@ export const NavLink = styled(Link)`
   background: transparent;
   letter-spacing: 0.01em;
   
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: 4px;
-    left: 16px;
-    right: 16px;
-    height: 2px;
-    background: #2a5cff;
-    transform: scaleX(0);
-    transform-origin: center;
-    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-  
   &:hover, &:focus {
     color: #99d1ff;
     background: rgba(42,92,255,0.08);
     outline: none;
-    
-    &::after {
-      transform: scaleX(1);
-    }
   }
   
   &.active {
     background: rgba(42,92,255,0.15);
     color: #99d1ff;
-    
-    &::after {
-      transform: scaleX(1);
-      background: #99d1ff;
-    }
   }
 `;
 

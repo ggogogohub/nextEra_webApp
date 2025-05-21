@@ -1,16 +1,18 @@
 import api from './api';
-import { AvailabilityUpdate, Availability } from '../types/schedule';
+import { UserProfile, UserProfileUpdate } from '../types/user';
+import { apiConfig } from '../config/api.config';
+import { Availability, AvailabilityUpdate } from '../types/schedule';
 
 export const ProfileService = {
   /** Get current user's profile details */
-  async getProfile() {
-    const response = await api.get('/profile');
+  async getProfile(): Promise<UserProfile> {
+    const response = await api.get<UserProfile>(apiConfig.endpoints.profile);
     return response.data;
   },
 
   /** Update user's profile */
-  async updateProfile(data: Partial<{ email: string; first_name: string; last_name: string; role?: string }>) {
-    const response = await api.put('/profile', data);
+  async updateProfile(data: UserProfileUpdate): Promise<UserProfile> {
+    const response = await api.put<UserProfile>(apiConfig.endpoints.profile, data);
     return response.data;
   },
 

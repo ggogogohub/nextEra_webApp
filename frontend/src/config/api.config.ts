@@ -21,6 +21,7 @@ export const apiConfig = {
       update: (id: string) => `/api/v1/schedules/${id}`,
       delete: (id: string) => `/api/v1/schedules/${id}`,
     },
+    profile: '/api/v1/profile',
   },
   headers: {
     'Content-Type': 'application/json',

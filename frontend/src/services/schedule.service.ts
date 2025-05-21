@@ -1,5 +1,6 @@
 import api from './api';
 import { Schedule, ScheduleFilter, TimeOffRequest, TimeOffRequestCreate, Availability, AvailabilityUpdate } from '../types/schedule';
+import { apiConfig } from '../config/api.config';
 
 export const ScheduleService = {
   /**
@@ -26,7 +27,7 @@ export const ScheduleService = {
       params.append('location', filter.location);
     }
 
-    const response = await api.get<Schedule[]>('/schedules', { params });
+    const response = await api.get<Schedule[]>(apiConfig.endpoints.schedules.list, { params });
     return response.data;
   },
 
@@ -36,7 +37,7 @@ export const ScheduleService = {
    * @returns Promise with schedule
    */
   async getSchedule(id: string): Promise<Schedule> {
-    const response = await api.get<Schedule>(`/schedules/${id}`);
+    const response = await api.get<Schedule>(apiConfig.endpoints.schedules.update(id));
     return response.data;
   },
 
@@ -45,7 +46,7 @@ export const ScheduleService = {
    * @returns Promise with time-off requests
    */
   async getTimeOffRequests(): Promise<TimeOffRequest[]> {
-    const response = await api.get<TimeOffRequest[]>('/schedules/time-off');
+    const response = await api.get<TimeOffRequest[]>(`${apiConfig.endpoints.schedules.list}/time-off`);
     return response.data;
   },
 
@@ -55,7 +56,7 @@ export const ScheduleService = {
    * @returns Promise with created time-off request
    */
   async createTimeOffRequest(request: TimeOffRequestCreate): Promise<TimeOffRequest> {
-    const response = await api.post<TimeOffRequest>('/schedules/time-off', request);
+    const response = await api.post<TimeOffRequest>(`${apiConfig.endpoints.schedules.list}/time-off`, request);
     return response.data;
   },
 
@@ -65,7 +66,7 @@ export const ScheduleService = {
    * @returns Promise with updated time-off request
    */
   async cancelTimeOffRequest(id: string): Promise<TimeOffRequest> {
-    const response = await api.delete<TimeOffRequest>(`/schedules/time-off/${id}`);
+    const response = await api.delete<TimeOffRequest>(`${apiConfig.endpoints.schedules.list}/time-off/${id}`);
     return response.data;
   },
 
@@ -74,7 +75,7 @@ export const ScheduleService = {
    * @returns Promise with availability
    */
   async getAvailability(): Promise<Availability[]> {
-    const response = await api.get<Availability[]>('/schedules/availability');
+    const response = await api.get<Availability[]>(`${apiConfig.endpoints.schedules.list}/availability`);
     return response.data;
   },
 
@@ -84,7 +85,7 @@ export const ScheduleService = {
    * @returns Promise with updated availability
    */
   async updateAvailability(availability: AvailabilityUpdate): Promise<Availability> {
-    const response = await api.put<Availability>(`/schedules/availability/${availability.day_of_week}`, availability);
+    const response = await api.put<Availability>(`${apiConfig.endpoints.schedules.list}/availability/${availability.day_of_week}`, availability);
     return response.data;
   },
 };
