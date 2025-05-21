@@ -24,7 +24,7 @@ export const CardTitle = styled.h3`
 
 export const CardContent = styled.div`
   color: ${({ theme }) => theme.colors.text.secondary};
-  font-size: ${({ theme }) => theme.typography.fontSize.base};
+  font-size: ${({ theme }) => theme.typography.sizes.base};
 `;
 
 export const CardHeader = styled.div`

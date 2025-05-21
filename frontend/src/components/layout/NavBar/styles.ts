@@ -203,7 +203,7 @@ export const MobileMenuButton = styled.button`
   }
 `;
 
-export const MobileMenu = styled.div<{ isOpen: boolean }>`
+export const MobileMenu = styled.div<{ $isOpen: boolean }>`
   display: none;
   position: fixed;
   top: 64px;
@@ -215,7 +215,7 @@ export const MobileMenu = styled.div<{ isOpen: boolean }>`
   padding: 24px; /* Multiples of 8px */
   flex-direction: column;
   gap: 16px; /* Multiples of 8px */
-  transform: ${({ isOpen }) => isOpen ? 'translateX(0)' : 'translateX(100%)'};
+  transform: ${({ $isOpen }) => $isOpen ? 'translateX(0)' : 'translateX(100%)'};
   transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); /* Critical easing */
   
   @media (max-width: 768px) {

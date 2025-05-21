@@ -22,7 +22,7 @@ const getStatusSize = (size: StatusIndicatorProps['size']) => {
   }
 };
 
-const pulse = keyframes`
+const pulseAnimation = keyframes`
   0% {
     opacity: 1;
   }
@@ -62,7 +62,7 @@ const Indicator = styled.div<{ type: StatusType; size: StatusIndicatorProps['siz
     border-radius: 50%;
     background-color: ${({ type }) => getStatusColor(type)};
     ${({ pulse }) => pulse && `
-      animation: ${pulse} ${theme.animations.duration.normal} ${theme.animations.easing.default} infinite;
+      animation: ${pulseAnimation} ${theme.animations.duration.normal} ${theme.animations.easing.default} infinite;
     `}
   }
 `;

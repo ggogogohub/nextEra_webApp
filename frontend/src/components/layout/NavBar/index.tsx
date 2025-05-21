@@ -44,7 +44,7 @@ const NavBar: React.FC = () => {
         {!isAuthenticated && <CTAButton to="/login">Get Started</CTAButton>}
       </Actions>
 
-      <MobileMenu isOpen={isMobileMenuOpen}>
+      <MobileMenu $isOpen={isMobileMenuOpen}>
         {isAuthenticated ? (
           <>
             <NavLink to="/dashboard">Dashboard</NavLink>

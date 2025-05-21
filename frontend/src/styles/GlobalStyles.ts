@@ -2,23 +2,23 @@ import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyles = createGlobalStyle`
   :root {
-    --color-coral-red: ${({ theme }) => theme.colors.coralRed};
-    --color-off-white: ${({ theme }) => theme.colors.offWhite};
-    --color-light-cyan: ${({ theme }) => theme.colors.lightCyan};
-    --color-dark-blue: ${({ theme }) => theme.colors.darkBlue};
-    --color-deep-navy: ${({ theme }) => theme.colors.deepNavy};
-    --color-bright-teal: ${({ theme }) => theme.colors.brightTeal};
+    --color-coral-red: ${({ theme }) => theme.colors.status.emergency.main};
+    --color-off-white: ${({ theme }) => theme.colors.surface.light};
+    --color-light-cyan: ${({ theme }) => theme.colors.secondary.hover};
+    --color-dark-blue: ${({ theme }) => theme.colors.primary.main};
+    --color-deep-navy: ${({ theme }) => theme.colors.primary.hover};
+    --color-bright-teal: ${({ theme }) => theme.colors.status.normal.main};
   }
 
   [data-theme='dark'] {
-    --color-off-white: #1D2330;
-    --color-light-cyan: #A8DADC;
-    --color-dark-blue: #27304A;
-    --color-deep-navy: #F1FAEE;
-    --color-bright-teal: #02C39A;
-    --color-coral-red: #E63946;
-    background-color: #1D2330;
-    color: #F1FAEE;
+    --color-off-white: ${({ theme }) => theme.colors.surface.dark};
+    --color-light-cyan: ${({ theme }) => theme.colors.secondary.hover};
+    --color-dark-blue: ${({ theme }) => theme.colors.primary.main};
+    --color-deep-navy: ${({ theme }) => theme.colors.text.primary};
+    --color-bright-teal: ${({ theme }) => theme.colors.status.normal.main};
+    --color-coral-red: ${({ theme }) => theme.colors.status.emergency.main};
+    background-color: ${({ theme }) => theme.colors.surface.dark};
+    color: ${({ theme }) => theme.colors.text.primary};
   }
 
   * {
@@ -28,18 +28,18 @@ const GlobalStyles = createGlobalStyle`
   }
 
   body {
-    font-family: 'Google Sans', sans-serif;
-    line-height: 1.6rem;
-    font-weight: ${({ theme }) => theme.typography.fontWeight.normal};
+    font-family: ${({ theme }) => theme.typography.fonts.secondary};
+    line-height: ${({ theme }) => theme.typography.lineHeights.normal};
+    font-weight: ${({ theme }) => theme.typography.weights.regular};
     color: ${({ theme }) => theme.colors.text.primary};
-    font-size: ${({ theme }) => theme.typography.fontSize.base};
+    font-size: ${({ theme }) => theme.typography.sizes.base};
     background-color: var(--color-off-white);
     transition: background 0.3s, color 0.3s;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'SF Pro Display', sans-serif;
-    font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
+    font-family: ${({ theme }) => theme.typography.fonts.primary};
+    font-weight: ${({ theme }) => theme.typography.weights.semibold};
     color: ${({ theme }) => theme.colors.text.primary};
   }
 

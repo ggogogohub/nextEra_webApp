@@ -37,18 +37,18 @@ export const IconContainer = styled.div`
 export const IconButton = styled.button<{ hasUnread: boolean }>`
   background: none;
   border: none;
-  padding: ${({ theme }) => theme.spacing.sm};
+  padding: ${({ theme }) => theme.spacing[2]};
   cursor: pointer;
   position: relative;
   color: ${({ theme }) => theme.colors.text.primary};
-  transition: transform ${({ theme }) => theme.transitions.fast};
+  transition: transform ${({ theme }) => theme.animations.duration.fast} ${({ theme }) => theme.animations.easing.default};
 
   &:hover {
     transform: scale(1.1);
   }
 
   &:focus {
-    outline: 2px solid ${({ theme }) => theme.colors.secondary};
+    outline: 2px solid ${({ theme }) => theme.colors.secondary.main};
     outline-offset: 2px;
   }
 `;
