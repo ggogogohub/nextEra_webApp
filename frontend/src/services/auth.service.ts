@@ -23,6 +23,9 @@ export const AuthService = {
     localStorage.setItem('access_token', response.data.access_token);
     localStorage.setItem('refresh_token', response.data.refresh_token);
 
+    // Set the token in the API configuration
+    api.defaults.headers.common['Authorization'] = `Bearer ${response.data.access_token}`;
+
     return response.data;
   },
 
@@ -86,6 +89,9 @@ export const AuthService = {
     localStorage.setItem('access_token', response.data.access_token);
     localStorage.setItem('refresh_token', response.data.refresh_token);
 
+    // Update the token in the API configuration
+    api.defaults.headers.common['Authorization'] = `Bearer ${response.data.access_token}`;
+
     return response.data;
   },
 
@@ -100,6 +106,8 @@ export const AuthService = {
     }
     localStorage.removeItem('access_token');
     localStorage.removeItem('refresh_token');
+    // Remove the token from the API configuration
+    delete api.defaults.headers.common['Authorization'];
   },
 
   /**

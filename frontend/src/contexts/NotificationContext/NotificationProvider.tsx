@@ -1,7 +1,9 @@
-import React, { useReducer, useEffect } from 'react';
+import React, { useReducer, useEffect, useCallback } from 'react';
 import { notificationService } from '../../services/notification.service';
 import { NotificationContext, Action } from './NotificationContext';
 import { NotificationState } from '../../types/notification.types';
+import { useAuth } from '../AuthContext/useAuth';
+import api from '../../services/api';
 
 // Initial state
 const initialState: NotificationState = {
@@ -39,6 +41,11 @@ const notificationReducer = (state: NotificationState, action: Action): Notifica
         notifications: state.notifications.map(n => ({ ...n, isRead: true })),
         unreadCount: 0,
       };
+    case 'SET_UNREAD_COUNT':
+       return {
+         ...state,
+         unreadCount: action.payload,
+       };
     default:
       return state;
   }
@@ -46,18 +53,25 @@ const notificationReducer = (state: NotificationState, action: Action): Notifica
 
 export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [state, dispatch] = useReducer(notificationReducer, initialState);
+  const { isAuthenticated } = useAuth();
 
-  const refreshNotifications = async () => {
+  const refreshNotifications = useCallback(async () => {
+    if (!isAuthenticated || !api.defaults.headers.common['Authorization']) {
+      dispatch({ type: 'SET_NOTIFICATIONS', payload: [] });
+      dispatch({ type: 'SET_UNREAD_COUNT', payload: 0 });
+      return;
+    }
     try {
       dispatch({ type: 'SET_LOADING', payload: true });
       const notifications = await notificationService.getNotifications();
       dispatch({ type: 'SET_NOTIFICATIONS', payload: notifications });
-    } catch {
+    } catch(err) {
+      console.error("Failed to fetch notifications:", err);
       dispatch({ type: 'SET_ERROR', payload: 'Failed to fetch notifications' });
     } finally {
       dispatch({ type: 'SET_LOADING', payload: false });
     }
-  };
+  }, [isAuthenticated]);
 
   const markAsRead = async (id: string) => {
     try {
@@ -79,10 +93,15 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ 
 
   useEffect(() => {
     refreshNotifications();
-    // Set up polling for new notifications
-    const interval = setInterval(refreshNotifications, 30000); // Poll every 30 seconds
-    return () => clearInterval(interval);
-  }, []);
+    let interval: NodeJS.Timeout;
+    if(isAuthenticated){
+      interval = setInterval(refreshNotifications, 30000);
+    }
+
+    return () => {
+      if(interval) clearInterval(interval);
+    }
+  }, [refreshNotifications, isAuthenticated]);
 
   return (
     <NotificationContext.Provider

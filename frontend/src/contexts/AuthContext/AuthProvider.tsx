@@ -32,7 +32,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   // Load user on mount
   useEffect(() => {
+    console.log('AuthProvider: Running loadUser effect');
     const loadUser = async () => {
+      console.log('AuthProvider: loadUser called');
       if (AuthService.isAuthenticated()) {
         try {
           const user = await AuthService.getCurrentUser();
@@ -45,26 +47,28 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         } catch (error) {
           console.error('Failed to load user:', error);
           AuthService.logout();
-          setAuthState({
+          setAuthState(prevState => ({
+            ...prevState,
             user: null,
             isAuthenticated: false,
             isLoading: false,
             error: 'Session expired. Please login again.',
-          });
+          }));
         }
       } else {
         setAuthState({
-          ...authState,
+          ...defaultAuthState, // Use defaultAuthState here to avoid potential circular dependency
           isLoading: false,
         });
       }
     };
 
     loadUser();
-  }, [authState]);
+  }, []); // Empty dependency array
 
   // Periodic token refresh
   useEffect(() => {
+    console.log('AuthProvider: Running token refresh effect');
     const interval = setInterval(async () => {
       if (AuthService.isAuthenticated()) {
         try {

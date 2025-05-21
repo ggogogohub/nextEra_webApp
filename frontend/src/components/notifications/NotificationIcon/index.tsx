@@ -1,40 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import { get } from '../../../utils/api';
-import { Notification } from '../../../types/notification';
 import { NotificationList } from './NotificationList';
 import { NotificationContainer, NotificationBadge } from './styles';
+import { useNotification } from '../../../hooks/useNotification';
 
 export const NotificationIcon: React.FC = () => {
-  const [notifications, setNotifications] = useState<Notification[]>([]);
   const [isOpen, setIsOpen] = useState(false);
-  const [unreadCount, setUnreadCount] = useState(0);
+  const { notifications, unreadCount, markAsRead, refreshNotifications } = useNotification();
 
   useEffect(() => {
-    const fetchNotifications = async () => {
-      try {
-        const response = await get<Notification[]>('/notifications');
-        setNotifications(response.data);
-        setUnreadCount(response.data.filter(n => !n.isRead).length);
-      } catch (error) {
-        console.error('Failed to fetch notifications:', error);
-      }
-    };
+    // Fetch notifications when the component mounts and when isAuthenticated changes
+    refreshNotifications();
 
-    fetchNotifications();
-    const interval = setInterval(fetchNotifications, 30000); // Poll every 30 seconds
-    return () => clearInterval(interval);
-  }, []);
+    // The interval is now handled in the NotificationContext
+    // Clean up function is no longer needed here for the interval
+  }, [refreshNotifications]); // Dependency on refreshNotifications
 
-  const handleMarkAsRead = async (id: string) => {
-    try {
-      await get(`/notifications/${id}/read`);
-      setNotifications(prev =>
-        prev.map(n => (n.id === id ? { ...n, isRead: true } : n))
-      );
-      setUnreadCount(prev => Math.max(0, prev - 1));
-    } catch (error) {
-      console.error('Failed to mark notification as read:', error);
-    }
+  // handleMarkAsRead is now provided by the context
+  const handleMarkAsReadWrapper = async (id: string) => {
+    await markAsRead(id);
   };
 
   return (
@@ -45,7 +28,7 @@ export const NotificationIcon: React.FC = () => {
       {isOpen && (
         <NotificationList
           notifications={notifications}
-          onMarkAsRead={handleMarkAsRead}
+          onMarkAsRead={handleMarkAsReadWrapper}
         />
       )}
     </NotificationContainer>

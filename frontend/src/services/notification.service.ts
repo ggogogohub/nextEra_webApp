@@ -1,4 +1,4 @@
-import api from '../utils/api';
+import api from './api';
 import { apiConfig } from '../config/api.config';
 import { Notification } from '../components/notifications/NotificationIcon/types';
 

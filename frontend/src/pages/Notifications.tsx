@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 import { Notification } from '../types/notification';
 import { notificationService } from '../services/notification.service';
@@ -23,27 +23,8 @@ const Title = styled.h1`
   margin-bottom: 1rem;
 `;
 
-const ErrorText = styled.div`
-  color: #c62828;
-  margin-bottom: 1rem;
-`;
-
 const NotificationsPage = () => {
   const [notifications, setNotifications] = useState<Notification[]>([]);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetch = async () => {
-      try {
-        const data = await notificationService.getNotifications();
-        setNotifications(data);
-      } catch (e) {
-        console.error(e);
-        setError('Failed to load notifications');
-      }
-    };
-    fetch();
-  }, []);
 
   const handleMarkRead = async (id: string) => {
     try {
@@ -57,7 +38,6 @@ const NotificationsPage = () => {
   return (
     <Container>
       <Title>Notifications</Title>
-      {error && <ErrorText>{error}</ErrorText>}
       {notifications.length === 0 ? (
         <div>No notifications</div>
       ) : (
