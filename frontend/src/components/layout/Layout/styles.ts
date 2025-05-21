@@ -1,13 +1,14 @@
 import styled from 'styled-components';
+import { theme } from '../../../styles/theme';
 
 export const LayoutContainer = styled.div`
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: #ffffff;
+  background: ${theme.colors.surface.light};
   
   @media (prefers-color-scheme: dark) {
-    background: #0f172a;
+    background: ${theme.colors.surface.dark};
   }
 `;
 

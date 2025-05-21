@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { theme } from '../../../styles/theme';
 
 export const NavBarContainer = styled.header`
   position: sticky;
@@ -30,29 +31,29 @@ export const NavBarContainer = styled.header`
 `;
 
 export const LogoContainer = styled(Link)`
-  font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, sans-serif;
-  font-weight: 600; /* SemiBold */
-  color: #ffffff;
+  font-family: ${theme.typography.fonts.primary};
+  font-weight: ${theme.typography.weights.semibold};
+  color: ${theme.colors.text.light};
   text-decoration: none;
   letter-spacing: 0.02em;
   display: flex;
   align-items: center;
-  gap: 8px; /* 8px grid */
-  border-radius: 4px; /* Use multiples of 8, or 4 as a smaller unit */
-  padding: 8px 16px; /* Multiples of 8px */
-  height: 52px; /* Specified size */
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); /* Default easing */
+  gap: ${theme.spacing[2]};
+  border-radius: 4px;
+  padding: ${theme.spacing[2]} ${theme.spacing[4]};
+  height: 52px;
+  transition: all ${theme.animations.duration.fast} ${theme.animations.easing.default};
   
   &:hover, &:focus {
-    background: rgba(153,209,255,0.1); /* Action Blue hover with transparency */
+    background: ${theme.colors.primary.hover}10;
     outline: none;
-    text-decoration: none; /* Explicitly remove underline on hover/focus */
+    text-decoration: none;
   }
   
   &:active {
-    transform: scale(0.98); /* Button Press animation scale */
-    transition: transform 0.1s cubic-bezier(0.16, 1, 0.3, 1); /* Critical easing for active state */
-    text-decoration: none; /* Explicitly remove underline on active */
+    transform: scale(0.98);
+    transition: transform ${theme.animations.duration.fastest} ${theme.animations.easing.spring};
+    text-decoration: none;
   }
 `;
 
@@ -68,41 +69,28 @@ export const NavLinks = styled.nav`
 
 export const NavLink = styled(Link)`
   position: relative;
-  color: #ffffff;
+  color: ${theme.colors.text.light};
   text-decoration: none;
-  font-family: "Google Sans", "SF Pro Display", -apple-system, sans-serif;
-  font-size: 1rem;
-  font-weight: 400; /* Regular weight */
-  line-height: 1.6; /* 1.6rem line height (applied to text, not container height) */
-  padding: 8px 16px; /* Multiples of 8px */
-  border-radius: 4px; /* Use multiples of 8, or 4 as a smaller unit */
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* Default easing */
+  font-family: ${theme.typography.fonts.secondary};
+  font-size: ${theme.typography.sizes.base};
+  font-weight: ${theme.typography.weights.regular};
+  line-height: ${theme.typography.lineHeights.relaxed};
+  padding: ${theme.spacing[2]} ${theme.spacing[4]};
+  border-radius: 4px;
+  transition: all ${theme.animations.duration.normal} ${theme.animations.easing.default};
   background: transparent;
   letter-spacing: 0.01em;
   
   &:hover, &:focus {
-    color: #99d1ff; /* Action Blue active state color */
-    background: rgba(42,92,255,0.08); /* Action Blue with transparency */
+    color: ${theme.colors.secondary.main};
+    background: ${theme.colors.primary.hover}10;
     outline: none;
-    text-decoration: none; /* Explicitly remove underline on hover/focus */
+    text-decoration: none;
   }
   
   &.active {
-    background: rgba(42,92,255,0.15); /* Action Blue with more transparency */
-    color: #99d1ff; /* Action Blue active state color */
-    /* Removed underline indicator */
-    /*
-    &::after {
-      content: '';
-      position: absolute;
-      left: 16px; /* Align with padding */
-      right: 16px; /* Align with padding */
-      bottom: 4px; /* 8px grid - position it 4px from the bottom */
-      height: 2px; /* Subtle indicator */
-      background: #99d1ff; /* Action Blue active state color */
-      border-radius: 1px;
-    }
-    */
+    background: ${theme.colors.primary.hover}20;
+    color: ${theme.colors.secondary.main};
   }
 `;
 
@@ -113,17 +101,17 @@ export const Actions = styled.div`
 `;
 
 export const CTAButton = styled(Link)`
-  background: #2a5cff; /* Action Blue */
-  color: #ffffff;
-  padding: 0 24px; /* Multiples of 8px */
-  height: 52px; /* Specified size */
-  border-radius: 8px; /* Multiples of 8px */
-  font-family: "SF Pro Display", -apple-system, sans-serif;
-  font-weight: 600; /* SemiBold */
-  font-size: 1rem;
-  text-decoration: none; /* Ensure no underline */
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); /* Default easing */
-  border: 0.5px solid #1a365d; /* Deep Trust Blue stroke */
+  background: ${theme.colors.secondary.main};
+  color: ${theme.colors.text.light};
+  padding: 0 ${theme.spacing[6]};
+  height: 52px;
+  border-radius: 8px;
+  font-family: ${theme.typography.fonts.primary};
+  font-weight: ${theme.typography.weights.semibold};
+  font-size: ${theme.typography.sizes.base};
+  text-decoration: none;
+  transition: all ${theme.animations.duration.fast} ${theme.animations.easing.default};
+  border: 0.5px solid ${theme.colors.primary.main};
   outline: none;
   display: flex;
   align-items: center;
@@ -131,21 +119,21 @@ export const CTAButton = styled(Link)`
   letter-spacing: 0.01em;
   
   @media (max-width: 768px) {
-    height: 48px; /* Mobile size */
-    padding: 0 20px; /* Adjusted padding for mobile */
+    height: 48px;
+    padding: 0 ${theme.spacing[5]};
   }
   
   &:hover, &:focus {
-    background: #3a6bff; /* Slightly lighter Action Blue for hover */
-    box-shadow: 0 0 0 4px rgba(42,92,255,0.25); /* Action Blue focus ring */
+    background: ${theme.colors.secondary.hover};
+    box-shadow: 0 0 0 4px ${theme.colors.secondary.main}40;
     outline: none;
-    text-decoration: none; /* Explicitly ensure no underline on hover */
+    text-decoration: none;
   }
   
   &:active {
-    transform: scale(0.95); /* Button Press animation scale */
-    transition: transform 0.1s cubic-bezier(0.16, 1, 0.3, 1); /* Critical easing for active state */
-    text-decoration: none; /* Explicitly ensure no underline on active */
+    transform: scale(0.95);
+    transition: transform ${theme.animations.duration.fastest} ${theme.animations.easing.spring};
+    text-decoration: none;
   }
 `;
 

@@ -1,13 +1,14 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { theme } from '@/styles/theme';
 
 export const HeroSection = styled.section`
   min-height: 100vh;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: 2rem;
-  background: linear-gradient(135deg, #1a365d 0%, #0a1e3d 100%);
+  padding: ${theme.spacing[16]} ${theme.spacing[8]};
+  background: ${theme.colors.surface.light};
   position: relative;
   overflow: hidden;
 `;
@@ -123,5 +124,5 @@ export const AnimationWrapper = styled.div`
 export const HeroLogoContainer = styled.div`
   display: flex;
   justify-content: center;
-  margin-bottom: ${({ theme }) => theme.spacing.md};
+  margin-bottom: ${theme.spacing[6]};
 `; 

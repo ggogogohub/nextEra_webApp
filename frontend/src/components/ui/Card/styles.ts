@@ -1,24 +1,25 @@
 import styled from 'styled-components';
+import { theme } from '../../../styles/theme';
 
 export const CardContainer = styled.div`
-  background: ${({ theme }) => theme.colors.background.default};
-  border-radius: ${({ theme }) => theme.borderRadius.md};
-  box-shadow: ${({ theme }) => theme.shadows.sm};
-  padding: ${({ theme }) => theme.spacing.base};
-  transition: transform ${({ theme }) => theme.transitions.fast},
-              box-shadow ${({ theme }) => theme.transitions.fast};
+  background: ${theme.colors.surface.light};
+  border-radius: 8px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  padding: ${theme.spacing[4]};
+  transition: transform ${theme.animations.duration.fast} ${theme.animations.easing.default},
+              box-shadow ${theme.animations.duration.fast} ${theme.animations.easing.default};
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: ${({ theme }) => theme.shadows.md};
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   }
 `;
 
 export const CardTitle = styled.h3`
-  color: ${({ theme }) => theme.colors.text.primary};
-  font-size: ${({ theme }) => theme.typography.fontSize.lg};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.semibold};
-  margin: 0 0 ${({ theme }) => theme.spacing.sm};
+  color: ${theme.colors.text.primary};
+  font-size: ${theme.typography.sizes.lg};
+  font-weight: ${theme.typography.weights.semibold};
+  margin: 0 0 ${theme.spacing[2]};
 `;
 
 export const CardContent = styled.div`

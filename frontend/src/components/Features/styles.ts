@@ -1,4 +1,5 @@
 import styled, { keyframes } from 'styled-components';
+import { theme } from '@/styles/theme';
 
 export const fadeInUp = keyframes`
   from { opacity: 0; transform: translateY(20px); }
@@ -6,8 +7,8 @@ export const fadeInUp = keyframes`
 `;
 
 export const FeatureSection = styled.section`
-  padding: 4rem 2rem;
-  background: ${({ theme }) => theme.colors.background.default};
+  padding: ${theme.spacing[16]} ${theme.spacing[8]};
+  background: ${theme.colors.surface.light};
 `;
 
 export const FeatureGrid = styled.div`

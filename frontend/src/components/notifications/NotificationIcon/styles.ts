@@ -1,4 +1,5 @@
 import styled, { keyframes } from 'styled-components';
+import { theme } from '../../../styles/theme';
 
 const pulse = keyframes`
   0% { transform: scale(1); }
@@ -20,16 +21,16 @@ export const IconContainer = styled.div`
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  padding: ${({ theme }) => theme.spacing.sm};
-  border-radius: ${({ theme }) => theme.borderRadius.full};
-  transition: background-color ${({ theme }) => theme.transitions.fast};
+  padding: ${theme.spacing[2]};
+  border-radius: 9999px;
+  transition: background-color ${theme.animations.duration.fast} ${theme.animations.easing.default};
 
   &:hover {
-    background-color: ${({ theme }) => theme.colors.background.hover};
+    background-color: ${theme.colors.surface.light};
   }
 
   svg {
-    color: ${({ theme }) => theme.colors.text.primary};
+    color: ${theme.colors.text.primary};
   }
 `;
 
@@ -68,10 +69,10 @@ export const Heartbeat = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  border-radius: ${({ theme }) => theme.borderRadius.full};
-  background: ${({ theme }) => theme.colors.error};
+  border-radius: 9999px;
+  background: ${theme.colors.status.emergency.main};
   opacity: 0.2;
-  animation: ${pulse} 2s ease-in-out infinite;
+  animation: ${pulse} 2s ${theme.animations.easing.default} infinite;
 `;
 
 export const NotificationContainer = styled.div`
