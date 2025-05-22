@@ -4,142 +4,196 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import styled from 'styled-components';
 import { useAuth } from '../hooks/useAuth';
-
+import { theme } from '@/styles/theme';
 
 const LoginContainer = styled.div`
-  min-height: 100vh;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, ${({ theme }) => theme.colors.deepNavy} 0%, ${({ theme }) => theme.colors.darkBlue} 100%);
-  transition: background 0.3s;
+  background-color: ${theme.colors.surface.light};
+  @media (prefers-color-scheme: dark) {
+    background-color: ${theme.colors.surface.dark};
+  }
+  transition: background-color 0.3s ease-in-out;
+  box-sizing: border-box;
 `;
 
 const LoginCard = styled.div`
-  background: rgba(29, 53, 87, 0.95);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border-radius: 4px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  padding: 2.8rem 2.1rem 2.1rem 2.1rem;
+  background: ${({ theme }) => theme.colors.surface.light};
+  @media (prefers-color-scheme: dark) {
+    background: ${({ theme }) => theme.colors.surface.dark};
+  }
+  border-radius: 8px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+  padding: ${theme.spacing[8]} ${theme.spacing[6]};
   width: 100%;
-  max-width: 380px;
+  max-width: 400px;
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  border: none;
+  border: 1px solid ${({ theme }) => theme.colors.border.light};
+   @media (prefers-color-scheme: dark) {
+    border: 1px solid ${({ theme }) => theme.colors.border.dark};
+  }
+  transition: all 0.3s ease-in-out;
+  overflow-y: hidden;
+
   @media (max-width: 480px) {
-    padding: 1.2rem 0.5rem;
-    max-width: 98vw;
+    padding: ${theme.spacing[5]} ${theme.spacing[4]};
+    max-width: 90vw;
   }
 `;
 
-const ProductName = styled.h1`
-  font-size: 2rem;
-  font-weight: 800;
-  letter-spacing: -0.03em;
-  color: ${({ theme }) => theme.colors.brightTeal};
+const ProductTitle = styled.h1`
+  font-family: ${theme.typography.fonts.primary};
+  font-size: ${theme.typography.sizes['2xl']};
+  font-weight: ${theme.typography.weights.semibold};
+  color: ${theme.colors.text.primary};
   text-align: center;
-  margin-bottom: 2rem;
-  margin-top: 0.01rem;
+  margin-bottom: ${theme.spacing[6]};
 `;
 
-
 const FormGroup = styled.div`
-  margin-bottom: 1.3rem;
+  margin-bottom: ${theme.spacing[4]};
   width: 100%;
 `;
 
 const Label = styled.label`
   display: block;
-  font-size: 1.03rem;
-  font-weight: 500;
-  margin-bottom: 0.37rem;
-  color: ${({ theme }) => theme.colors.offWhite};
+  font-family: ${theme.typography.fonts.secondary};
+  font-size: ${theme.typography.sizes.base};
+  font-weight: ${theme.typography.weights.regular};
+  margin-bottom: ${theme.spacing[2]};
+  color: ${({ theme }) => theme.colors.text.primary};
 `;
 
-const StyledInput = styled.input`
+const StyledInput = styled(Field)`
   width: 100%;
-  padding: 0.92rem 1.15rem;
-  border-radius: 4px;
-  border: 1px solid #ddd;
-  background: ${({ theme }) => theme.colors.offWhite};
-  font-size: 1.07rem;
-  color: ${({ theme }) => theme.colors.deepNavy};
-  transition: border-color 0.2s, background 0.2s;
+  padding: ${theme.spacing[3]} ${theme.spacing[4]};
+  border-radius: 8px;
+  border: 1px solid ${({ theme }) => theme.colors.border.light};
+   @media (prefers-color-scheme: dark) {
+    border: 1px solid ${({ theme }) => theme.colors.border.dark};
+  }
+  background: ${({ theme }) => theme.colors.surface.light};
+   @media (prefers-color-scheme: dark) {
+    background: ${({ theme }) => theme.colors.surface.dark};
+  }
+  font-family: ${theme.typography.fonts.mono};
+  font-size: ${theme.typography.sizes.base};
+  color: ${({ theme }) => theme.colors.text.primary};
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+
   &:focus {
-    background: ${({ theme }) => theme.colors.offWhite};
-    border-color: ${({ theme }) => theme.colors.brightTeal};
+    border-color: ${theme.colors.secondary.main};
+    box-shadow: 0 0 0 2px ${theme.colors.secondary.main}40;
     outline: none;
+     @media (prefers-color-scheme: dark) {
+      box-shadow: 0 0 0 2px ${theme.colors.secondary.hover}40;
+    }
   }
 `;
 
 const ForgotPassword = styled.div`
   width: 100%;
   text-align: right;
-  margin-bottom: 1.2rem;
+  margin-bottom: ${theme.spacing[4]};
+
   a {
-    color: ${({ theme }) => theme.colors.brightTeal};
-    font-size: 0.97rem;
+    color: ${({ theme }) => theme.colors.primary.main};
+    font-size: ${theme.typography.sizes.sm};
     text-decoration: none;
-    transition: text-decoration 0.13s, color 0.13s;
-    &:hover { text-decoration: underline; color: ${({ theme }) => theme.colors.coralRed}; }
+    transition: color 0.2s ease-in-out;
+
+    &:hover {
+      color: ${({ theme }) => theme.colors.primary.hover};
+      text-decoration: underline;
+    }
+
+     @media (prefers-color-scheme: dark) {
+      color: ${({ theme }) => theme.colors.primary.hover};
+       &:hover {
+        color: ${({ theme }) => theme.colors.primary.main};
+      }
+    }
   }
 `;
 
 const StyledButton = styled.button`
   width: 100%;
-  border-radius: 4px;
-  font-size: 1.12rem;
-  padding: 1rem 0;
-  background: ${({ theme }) => theme.colors.brightTeal};
-  color: ${({ theme }) => theme.colors.deepNavy};
-  font-weight: 700;
-  border: none;
-  margin-top: 0.1rem;
-  margin-bottom: 0.7rem;
-  transition: background 0.2s;
+  height: 52px;
+  border-radius: 8px;
+  font-family: ${theme.typography.fonts.primary};
+  font-weight: ${theme.typography.weights.semibold};
+  font-size: ${theme.typography.sizes.base};
+  transition: all ${theme.animations.duration.fast} ${theme.animations.easing.default};
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: 0.01em;
   cursor: pointer;
-  &:hover, &:focus {
-    background: ${({ theme }) => theme.colors.coralRed};
-    color: ${({ theme }) => theme.colors.offWhite};
-    outline: none;
+
+  background: ${theme.colors.secondary.main};
+  color: ${theme.colors.text.light};
+  border: none;
+
+  &:hover {
+    background: ${theme.colors.secondary.hover};
+    box-shadow: 0 0 0 4px ${theme.colors.secondary.main}40;
   }
+
   &:active {
-    background: ${({ theme }) => theme.colors.brightTeal};
-    color: ${({ theme }) => theme.colors.deepNavy};
+    transform: scale(0.95);
+    transition: transform ${theme.animations.duration.fastest} ${theme.animations.easing.spring};
   }
-  &:focus-visible {
-    outline: 2px solid ${({ theme }) => theme.colors.coralRed};
-    outline-offset: 2px;
-  }
+
   &:disabled {
-    background: ${({ theme }) => theme.colors.lightCyan};
-    color: ${({ theme }) => theme.colors.deepNavy};
+    background: ${theme.colors.surface.light};
+    color: ${theme.colors.text.secondary};
     cursor: not-allowed;
+    opacity: 0.6;
+     @media (prefers-color-scheme: dark) {
+      background: ${theme.colors.surface.dark};
+      color: ${theme.colors.text.secondary};
+    }
+  }
+
+  &:focus-visible {
+    outline: 2px solid ${theme.colors.secondary.main};
+    outline-offset: 2px;
+     @media (prefers-color-scheme: dark) {
+      outline-color: ${theme.colors.secondary.hover};
+    }
   }
 `;
 
 const ErrorText = styled.div`
-  color: ${({ theme }) => theme.colors.coralRed};
-  font-size: 1.01rem;
-  margin-top: 0.3rem;
-  margin-bottom: 0.1rem;
+  color: ${({ theme }) => theme.colors.status.emergency.main};
+  font-size: ${theme.typography.sizes.sm};
+  margin-top: ${theme.spacing[1]};
+`;
+
+const StyledLink = styled(Link)`
+  color: ${({ theme }) => theme.colors.secondary.main};
+  font-weight: ${theme.typography.weights.semibold};
+  text-decoration: none;
+  margin-left: ${theme.spacing[1]};
+  transition: color 0.2s ease-in-out;
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.secondary.hover};
+    text-decoration: underline;
+  }
 `;
 
 const LoginLink = styled.div`
   text-align: center;
-  font-size: 1.02rem;
-  color: ${({ theme }) => theme.colors.lightCyan};
-  margin-top: 1.8rem;
-  a {
-    color: ${({ theme }) => theme.colors.brightTeal};
-    font-weight: 500;
-    text-decoration: none;
-    margin-left: 0.18rem;
-    transition: text-decoration 0.13s, color 0.13s;
-    &:hover { text-decoration: underline; color: ${({ theme }) => theme.colors.coralRed}; }
-  }
+  font-family: ${theme.typography.fonts.secondary};
+  font-size: ${theme.typography.sizes.base};
+  color: ${({ theme }) => theme.colors.text.secondary};
+  margin-top: ${theme.spacing[6]};
 `;
 
 const LoginSchema = Yup.object().shape({
@@ -166,21 +220,21 @@ const Login = () => {
 
   return (
     <LoginContainer>
-      <LoginCard className="glass">
-        <ProductName>NextEra Workforce</ProductName>
+      <LoginCard>
+        <ProductTitle>NextEra Workforce</ProductTitle>
         <Formik initialValues={{ email: '', password: '' }} validationSchema={LoginSchema} onSubmit={handleSubmit}>
           {({ isSubmitting, isValid }) => (
             <Form onChange={clearError} style={{ width: '100%' }}>
               <FormGroup>
                 <Label htmlFor="email">Email</Label>
-                <Field as={StyledInput} type="email" id="email" name="email" placeholder="Enter your email" autoComplete="username" />
+                <StyledInput type="email" id="email" name="email" placeholder="Enter your email" autoComplete="username" />
                 <ErrorMessage name="email">
                   {(msg) => <ErrorText>{msg}</ErrorText>}
                 </ErrorMessage>
               </FormGroup>
               <FormGroup>
                 <Label htmlFor="password">Password</Label>
-                <Field as={StyledInput} type="password" id="password" name="password" placeholder="Enter your password" autoComplete="current-password" />
+                <StyledInput type="password" id="password" name="password" placeholder="Enter your password" autoComplete="current-password" />
                 <ErrorMessage name="password">
                   {(msg) => <ErrorText>{msg}</ErrorText>}
                 </ErrorMessage>
@@ -196,7 +250,7 @@ const Login = () => {
         </Formik>
         <LoginLink>
           Don&apos;t have an account?
-          <Link to="/register">Sign up</Link>
+          <StyledLink to="/register">Sign up</StyledLink>
         </LoginLink>
       </LoginCard>
     </LoginContainer>

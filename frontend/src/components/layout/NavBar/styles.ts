@@ -3,9 +3,10 @@ import { Link } from 'react-router-dom';
 import { theme } from '../../../styles/theme';
 
 export const NavBarContainer = styled.header`
-  position: sticky;
+  position: fixed;
   top: 0;
-  width: 100%;
+  left: 0;
+  width: 100vw;
   background: rgba(26, 54, 93, 0.9); /* Deep Trust Blue with transparency */
   backdrop-filter: blur(10px);
   box-shadow: 0 8px 16px rgba(0,0,0,0.12);
@@ -17,7 +18,7 @@ export const NavBarContainer = styled.header`
   justify-content: space-between;
   z-index: 1000;
   margin: 0 auto;
-  max-width: 100%;
+  max-width: 100vw;
   /* Ensure no overflow hiding that could crop dropdowns */
   overflow: visible;
   

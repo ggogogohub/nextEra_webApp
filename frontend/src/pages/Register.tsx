@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import styled, { createGlobalStyle } from 'styled-components';
+import styled from 'styled-components';
 import { AuthService } from '../services/auth.service';
 import { RegisterCredentials } from '../types/auth';
+import { theme } from '@/styles/theme';
 
 // Validation schema
 const RegisterSchema = Yup.object().shape({
@@ -27,148 +28,196 @@ const RegisterSchema = Yup.object().shape({
 });
 
 // Styled components
-const GlobalStyle = createGlobalStyle`
-  body {
-    font-family: 'Inter', 'Manrope', 'SF Pro', 'Segoe UI', 'Roboto', Arial, sans-serif;
-    background: #f8fafc;
-    color: #191d23;
-    font-size: 17px;
-    letter-spacing: -0.01em;
-  }
-`;
-
 const RegisterContainer = styled.div`
-  min-height: 100vh;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: none;
+  background-color: ${theme.colors.surface.light};
+  @media (prefers-color-scheme: dark) {
+    background-color: ${theme.colors.surface.dark};
+  }
+  transition: background-color 0.3s ease-in-out;
+  box-sizing: border-box;
 `;
 
 const RegisterCard = styled.div`
-  background: #fff;
-  border-radius: 4px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  padding: 2.8rem 2.1rem 2.1rem 2.1rem;
+  background: ${({ theme }) => theme.colors.surface.light};
+  @media (prefers-color-scheme: dark) {
+    background: ${({ theme }) => theme.colors.surface.dark};
+  }
+  border-radius: 8px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+  padding: ${theme.spacing[8]} ${theme.spacing[6]};
   width: 100%;
-  max-width: 380px;
+  max-width: 400px;
   display: flex;
   flex-direction: column;
   align-items: stretch;
+  border: 1px solid ${({ theme }) => theme.colors.border.light};
+   @media (prefers-color-scheme: dark) {
+    border: 1px solid ${({ theme }) => theme.colors.border.dark};
+  }
+  transition: all 0.3s ease-in-out;
+  overflow-y: hidden;
+
   @media (max-width: 480px) {
-    padding: 1.2rem 0.5rem;
-    max-width: 98vw;
+    padding: ${theme.spacing[5]} ${theme.spacing[4]};
+    max-width: 90vw;
   }
 `;
 
-const ProductName = styled.h1`
-  font-size: 2rem;
-  font-weight: 800;
-  letter-spacing: -0.03em;
-  color: rgb(17, 20, 24);
+const ProductTitle = styled.h1`
+  font-family: ${theme.typography.fonts.primary};
+  font-size: ${theme.typography.sizes['2xl']};
+  font-weight: ${theme.typography.weights.semibold};
+  color: ${theme.colors.text.primary};
   text-align: center;
-  margin-bottom: 2rem;
-  margin-top: 0.01rem;
+  margin-bottom: ${theme.spacing[6]};
 `;
 
 const FormGroup = styled.div`
-  margin-bottom: 1.3rem;
+  margin-bottom: ${theme.spacing[4]};
   width: 100%;
 `;
 
 const Label = styled.label`
   display: block;
-  font-size: 1.03rem;
-  font-weight: 500;
-  margin-bottom: 0.37rem;
-  color: #23272f;
+  font-family: ${theme.typography.fonts.secondary};
+  font-size: ${theme.typography.sizes.base};
+  font-weight: ${theme.typography.weights.regular};
+  margin-bottom: ${theme.spacing[2]};
+  color: ${({ theme }) => theme.colors.text.primary};
 `;
 
 const StyledInput = styled(Field)`
   width: 100%;
-  padding: 0.92rem 1.15rem;
-  border-radius: 0.9rem;
-  border: none;
-  background: #f1f5f9;
-  font-size: 1.07rem;
-  color: #191d23;
-  transition: box-shadow 0.18s, background 0.18s;
-  box-shadow: 0 1px 2px 0 rgba(30, 41, 59, 0.02) inset;
+  padding: ${theme.spacing[3]} ${theme.spacing[4]};
+  border-radius: 8px;
+  border: 1px solid ${({ theme }) => theme.colors.border.light};
+   @media (prefers-color-scheme: dark) {
+    border: 1px solid ${({ theme }) => theme.colors.border.dark};
+  }
+  background: ${({ theme }) => theme.colors.surface.light};
+   @media (prefers-color-scheme: dark) {
+    background: ${({ theme }) => theme.colors.surface.dark};
+  }
+  font-family: ${theme.typography.fonts.mono};
+  font-size: ${theme.typography.sizes.base};
+  color: ${({ theme }) => theme.colors.text.primary};
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+
   &:focus {
-    background: #e0e7ef;
-    box-shadow: 0 0 0 2px #6366f1;
+    border-color: ${theme.colors.secondary.main};
+    box-shadow: 0 0 0 2px ${theme.colors.secondary.main}40;
     outline: none;
+     @media (prefers-color-scheme: dark) {
+      box-shadow: 0 0 0 2px ${theme.colors.secondary.hover}40;
+    }
   }
 `;
 
 const StyledSelect = styled(Field)`
   width: 100%;
-  padding: 0.92rem 1.15rem;
-  border-radius: 0.9rem;
-  border: none;
-  background: #f1f5f9;
-  font-size: 1.07rem;
-  color: #191d23;
-  transition: box-shadow 0.18s, background 0.18s;
-  box-shadow: 0 1px 2px 0 rgba(30, 41, 59, 0.02) inset;
+  padding: ${theme.spacing[3]} ${theme.spacing[4]};
+  border-radius: 8px;
+  border: 1px solid ${({ theme }) => theme.colors.border.light};
+   @media (prefers-color-scheme: dark) {
+    border: 1px solid ${({ theme }) => theme.colors.border.dark};
+  }
+  background: ${({ theme }) => theme.colors.surface.light};
+   @media (prefers-color-scheme: dark) {
+    background: ${({ theme }) => theme.colors.surface.dark};
+  }
+  font-family: ${theme.typography.fonts.secondary};
+  font-size: ${theme.typography.sizes.base};
+  color: ${({ theme }) => theme.colors.text.primary};
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+
   &:focus {
-    background: #e0e7ef;
-    box-shadow: 0 0 0 2px #6366f1;
+    border-color: ${theme.colors.secondary.main};
+    box-shadow: 0 0 0 2px ${theme.colors.secondary.main}40;
     outline: none;
+     @media (prefers-color-scheme: dark) {
+      box-shadow: 0 0 0 2px ${theme.colors.secondary.hover}40;
+    }
   }
 `;
 
 const ErrorText = styled.div`
-  color: #e11d48;
-  font-size: 1.01rem;
-  margin-top: 0.3rem;
-  margin-bottom: 0.1rem;
+  color: ${({ theme }) => theme.colors.status.emergency.main};
+  font-size: ${theme.typography.sizes.sm};
+  margin-top: ${theme.spacing[1]};
 `;
 
 const StyledButton = styled.button`
   width: 100%;
-  border-radius: 0.9rem;
-  font-size: 1.12rem;
-  padding: 1.02rem 0;
-  background: #6366f1;
-  color: #fff;
-  font-weight: 700;
-  border: none;
-  margin-top: 0.1rem;
-  margin-bottom: 0.7rem;
-  box-shadow: 0 2px 8px 0 rgba(99, 102, 241, 0.08);
-  transition: background 0.18s, box-shadow 0.18s, transform 0.13s;
+  height: 52px;
+  border-radius: 8px;
+  font-family: ${theme.typography.fonts.primary};
+  font-weight: ${theme.typography.weights.semibold};
+  font-size: ${theme.typography.sizes.base};
+  transition: all ${theme.animations.duration.fast} ${theme.animations.easing.default};
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: 0.01em;
   cursor: pointer;
-  &:hover, &:focus {
-    background: #4338ca;
-    box-shadow: 0 4px 18px 0 rgba(99, 102, 241, 0.14);
-    transform: translateY(-1px) scale(1.01);
-    outline: none;
+
+  background: ${theme.colors.secondary.main};
+  color: ${theme.colors.text.light};
+  border: none;
+
+  &:hover {
+    background: ${theme.colors.secondary.hover};
+    box-shadow: 0 0 0 4px ${theme.colors.secondary.main}40;
   }
+
   &:active {
-    background: #6366f1;
-    transform: none;
+    transform: scale(0.95);
+    transition: transform ${theme.animations.duration.fastest} ${theme.animations.easing.spring};
   }
+
   &:disabled {
-    background: #c7d2fe;
-    color: #fff;
+    background: ${theme.colors.surface.light};
+    color: ${theme.colors.text.secondary};
     cursor: not-allowed;
+    opacity: 0.6;
+     @media (prefers-color-scheme: dark) {
+      background: ${theme.colors.surface.dark};
+      color: ${theme.colors.text.secondary};
+    }
+  }
+
+  &:focus-visible {
+    outline: 2px solid ${theme.colors.secondary.main};
+    outline-offset: 2px;
+     @media (prefers-color-scheme: dark) {
+      outline-color: ${theme.colors.secondary.hover};
+    }
+  }
+`;
+
+const StyledLink = styled(Link)`
+  color: ${({ theme }) => theme.colors.secondary.main};
+  font-weight: ${theme.typography.weights.semibold};
+  text-decoration: none;
+  margin-left: ${theme.spacing[1]};
+  transition: color 0.2s ease-in-out;
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.secondary.hover};
+    text-decoration: underline;
   }
 `;
 
 const LoginLink = styled.div`
   text-align: center;
-  font-size: 1.02rem;
-  color: #7b8190;
-  margin-top: 1.8rem;
-  a {
-    color: #6366f1;
-    font-weight: 500;
-    text-decoration: none;
-    margin-left: 0.18rem;
-    transition: text-decoration 0.13s, color 0.13s;
-    &:hover { text-decoration: underline; color: #4338ca; }
-  }
+  font-family: ${theme.typography.fonts.secondary};
+  font-size: ${theme.typography.sizes.base};
+  color: ${({ theme }) => theme.colors.text.secondary};
+  margin-top: ${theme.spacing[6]};
 `;
 
 const Register = () => {
@@ -225,12 +274,12 @@ const Register = () => {
 
   return (
     <>
-      <GlobalStyle />
+      {/* <GlobalStyle /> */}
       <RegisterContainer>
         <RegisterCard>
-          <ProductName>Create an Account</ProductName>
+          <ProductTitle>Create an Account</ProductTitle>
           {error && <ErrorText>{error}</ErrorText>}
-          {success && <ErrorText style={{ color: '#2e7d32', background: '#e8f5e9' }}>{success}</ErrorText>}
+          {success && <ErrorText style={{ color: theme.colors.status.normal.main, background: theme.colors.surface.light }}>{success}</ErrorText>}
           <Formik
             initialValues={{
               email: '',
@@ -243,52 +292,55 @@ const Register = () => {
             validationSchema={RegisterSchema}
             onSubmit={handleSubmit}
           >
-            {({ isSubmitting, isValid, dirty, setFieldValue }) => (
+            {({ isSubmitting, isValid, dirty }) => (
               <Form onChange={() => setError(null)} style={{ width: '100%' }}>
                 <FormGroup>
                   <Label htmlFor="email">Email</Label>
-                  <StyledInput as={Field} type="email" id="email" name="email" placeholder="Enter your email" />
-                  <ErrorMessage name="email" component={ErrorText} />
+                  <StyledInput type="email" id="email" name="email" placeholder="Enter your email" />
+                  <ErrorMessage name="email">
+                    {(msg) => <ErrorText>{msg}</ErrorText>}
+                  </ErrorMessage>
                 </FormGroup>
                 <FormGroup>
                   <Label htmlFor="first_name">First Name</Label>
-                  <StyledInput as={Field} type="text" id="first_name" name="first_name" placeholder="Enter your first name" />
-                  <ErrorMessage name="first_name" component={ErrorText} />
+                  <StyledInput type="text" id="first_name" name="first_name" placeholder="Enter your first name" />
+                  <ErrorMessage name="first_name">
+                    {(msg) => <ErrorText>{msg}</ErrorText>}
+                  </ErrorMessage>
                 </FormGroup>
                 <FormGroup>
                   <Label htmlFor="last_name">Last Name</Label>
-                  <StyledInput as={Field} type="text" id="last_name" name="last_name" placeholder="Enter your last name" />
-                  <ErrorMessage name="last_name" component={ErrorText} />
+                  <StyledInput type="text" id="last_name" name="last_name" placeholder="Enter your last name" />
+                  <ErrorMessage name="last_name">
+                    {(msg) => <ErrorText>{msg}</ErrorText>}
+                  </ErrorMessage>
                 </FormGroup>
                 <FormGroup>
                   <Label htmlFor="role">Role</Label>
-                  <StyledSelect
-                    as="select"
-                    id="role"
-                    name="role"
-                    data-testid="role-select"
-                    onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
-                      const selectedRole = e.target.value;
-                      setFieldValue('role', selectedRole, true);
-                    }}
-                  >
+                  <StyledSelect as="select" id="role" name="role">
                     <option value="employee">Employee</option>
                     <option value="manager">Manager</option>
                     <option value="admin">Admin</option>
                   </StyledSelect>
-                  <ErrorMessage name="role" component={ErrorText} />
+                  <ErrorMessage name="role">
+                    {(msg) => <ErrorText>{msg}</ErrorText>}
+                  </ErrorMessage>
                 </FormGroup>
                 <FormGroup>
                   <Label htmlFor="password">Password</Label>
-                  <StyledInput as={Field} type="password" id="password" name="password" placeholder="Enter your password" />
-                  <ErrorMessage name="password" component={ErrorText} />
+                  <StyledInput type="password" id="password" name="password" placeholder="Enter your password" autoComplete="new-password" />
+                  <ErrorMessage name="password">
+                    {(msg) => <ErrorText>{msg}</ErrorText>}
+                  </ErrorMessage>
                 </FormGroup>
                 <FormGroup>
                   <Label htmlFor="confirmPassword">Confirm Password</Label>
-                  <StyledInput as={Field} type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm your password" />
-                  <ErrorMessage name="confirmPassword" component={ErrorText} />
+                  <StyledInput type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm your password" autoComplete="new-password" />
+                  <ErrorMessage name="confirmPassword">
+                    {(msg) => <ErrorText>{msg}</ErrorText>}
+                  </ErrorMessage>
                 </FormGroup>
-                <StyledButton type="submit" disabled={isSubmitting || !(isValid && dirty)}>
+                <StyledButton type="submit" disabled={isSubmitting || !isValid || !dirty}>
                   {submitting ? 'Registering...' : 'Register'}
                 </StyledButton>
               </Form>
@@ -296,7 +348,7 @@ const Register = () => {
           </Formik>
           <LoginLink>
             Already have an account?
-            <Link to="/login">Sign in</Link>
+            <StyledLink to="/login">Login</StyledLink>
           </LoginLink>
         </RegisterCard>
       </RegisterContainer>
