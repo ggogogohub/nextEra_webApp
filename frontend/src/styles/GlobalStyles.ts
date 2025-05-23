@@ -1,79 +1,94 @@
-import { createGlobalStyle } from 'styled-components';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-const GlobalStyles = createGlobalStyle`
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+@layer base {
   :root {
-    --color-coral-red: ${({ theme }) => theme.colors.status.emergency.main};
-    --color-off-white: ${({ theme }) => theme.colors.surface.light};
-    --color-light-cyan: ${({ theme }) => theme.colors.secondary.hover};
-    --color-dark-blue: ${({ theme }) => theme.colors.primary.main};
-    --color-deep-navy: ${({ theme }) => theme.colors.primary.hover};
-    --color-bright-teal: ${({ theme }) => theme.colors.status.normal.main};
+    --background: 0 0% 100%;
+    --foreground: 0 0% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 3.9%;
+    --primary: 0 0% 9%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 0 0% 96.1%;
+    --secondary-foreground: 0 0% 9%;
+    --muted: 0 0% 96.1%;
+    --muted-foreground: 0 0% 45.1%;
+    --accent: 0 0% 96.1%;
+    --accent-foreground: 0 0% 9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+    --ring: 0 0% 3.9%;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+    --radius: 0.5rem;
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
   }
-
-  [data-theme='dark'] {
-    --color-off-white: ${({ theme }) => theme.colors.surface.dark};
-    --color-light-cyan: ${({ theme }) => theme.colors.secondary.hover};
-    --color-dark-blue: ${({ theme }) => theme.colors.primary.main};
-    --color-deep-navy: ${({ theme }) => theme.colors.text.primary};
-    --color-bright-teal: ${({ theme }) => theme.colors.status.normal.main};
-    --color-coral-red: ${({ theme }) => theme.colors.status.emergency.main};
-    background-color: ${({ theme }) => theme.colors.surface.dark};
-    color: ${({ theme }) => theme.colors.text.primary};
+  .dark {
+    --background: 0 0% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 9%;
+    --secondary: 0 0% 14.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 14.9%;
+    --muted-foreground: 0 0% 63.9%;
+    --accent: 0 0% 14.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 14.9%;
+    --input: 0 0% 14.9%;
+    --ring: 0 0% 83.1%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
   }
+}
 
+@layer base {
   * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+    @apply border-border;
   }
-
   body {
-    font-family: ${({ theme }) => theme.typography.fonts.secondary};
-    line-height: ${({ theme }) => theme.typography.lineHeights.normal};
-    font-weight: ${({ theme }) => theme.typography.weights.regular};
-    color: ${({ theme }) => theme.colors.text.primary};
-    font-size: ${({ theme }) => theme.typography.sizes.base};
-    background-color: var(--color-off-white);
-    transition: background 0.3s, color 0.3s;
-    overflow-x: hidden;
+    @apply bg-background text-foreground;
   }
-
-  h1, h2, h3, h4, h5, h6 {
-    font-family: ${({ theme }) => theme.typography.fonts.primary};
-    font-weight: ${({ theme }) => theme.typography.weights.semibold};
-    color: ${({ theme }) => theme.colors.text.primary};
-  }
-
-  a {
-    color: var(--color-dark-blue);
-    text-decoration: none;
-    transition: color 0.2s;
-    &:hover, &:focus {
-      color: var(--color-coral-red);
-      text-decoration: underline;
-      outline: none;
-    }
-  }
-
-  button, [tabindex]:not([tabindex='-1']) {
-    cursor: pointer;
-    outline: none;
-    transition: box-shadow 0.2s, border 0.2s;
-    &:focus-visible {
-      outline: 2px solid var(--color-bright-teal);
-      outline-offset: 2px;
-      box-shadow: 0 0 0 2px var(--color-coral-red);
-    }
-  }
-
-  /* Glassmorphism utility */
-  .glass {
-    background: rgba(29, 53, 87, 0.95);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border-radius: 4px;
-    border: none;
-  }
-`;
-
-export default GlobalStyles;
+}
