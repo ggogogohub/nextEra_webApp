@@ -1,18 +1,25 @@
 import React from 'react';
-import { CardContainer, CardContent, CardHeader } from './styles.ts';
 
-interface CardProps {
-  title?: string;
-  children: React.ReactNode;
-}
+export const Card: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({ className = '', ...props }) => (
+  <div className={`rounded-lg border bg-card text-card-foreground shadow-sm ${className}`} {...props} />
+);
 
-export const Card: React.FC<CardProps> = ({ title, children }) => {
-  return (
-    <CardContainer>
-      {title && <CardHeader>{title}</CardHeader>}
-      <CardContent>{children}</CardContent>
-    </CardContainer>
-  );
-};
+export const CardHeader: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({ className = '', ...props }) => (
+  <div className={`flex flex-col space-y-1.5 p-6 ${className}`} {...props} />
+);
 
-export default Card;
+export const CardTitle: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({ className = '', ...props }) => (
+  <div className={`text-2xl font-semibold leading-none tracking-tight ${className}`} {...props} />
+);
+
+export const CardDescription: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({ className = '', ...props }) => (
+  <div className={`text-sm text-muted-foreground ${className}`} {...props} />
+);
+
+export const CardContent: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({ className = '', ...props }) => (
+  <div className={`p-6 pt-0 ${className}`} {...props} />
+);
+
+export const CardFooter: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({ className = '', ...props }) => (
+  <div className={`flex items-center p-6 pt-0 ${className}`} {...props} />
+);

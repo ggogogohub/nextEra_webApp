@@ -17,14 +17,21 @@ import RolesPage from './pages/admin/Roles';
 import SchedulesPage from './pages/Schedules';
 import NotificationsPage from './pages/Notifications';
 import Landing from './pages/Landing';
-import "./index.css";
+import "./styles/globals.css";
 
 // Create a client for React Query
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 5 * 60 * 1000, // 5 minutes
+      retry: 1,
+    },
+  },
+});
 
 function App() {
   return (
-    <div className="font-sans">
+    <div className="min-h-screen bg-background font-sans antialiased">
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
           <NotificationProvider>

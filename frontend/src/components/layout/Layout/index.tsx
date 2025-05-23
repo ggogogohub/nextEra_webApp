@@ -1,7 +1,6 @@
 import React from 'react';
 import NavBar from '../NavBar';
 import { Outlet } from 'react-router-dom';
-import { LayoutContainer, MainContent } from './styles';
 
 interface LayoutProps {
   children?: React.ReactNode;
@@ -9,12 +8,12 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
-    <LayoutContainer>
+    <div className="min-h-screen flex flex-col pt-16 bg-background">
       <NavBar />
-      <MainContent>
+      <main className="flex-1 w-full max-w-7xl mx-auto px-4">
         {children || <Outlet />}
-      </MainContent>
-    </LayoutContainer>
+      </main>
+    </div>
   );
 };
 
