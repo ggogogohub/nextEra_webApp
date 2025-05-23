@@ -35,6 +35,7 @@ const GlobalStyles = createGlobalStyle`
     font-size: ${({ theme }) => theme.typography.sizes.base};
     background-color: var(--color-off-white);
     transition: background 0.3s, color 0.3s;
+    overflow-x: hidden;
   }
 
   h1, h2, h3, h4, h5, h6 {
