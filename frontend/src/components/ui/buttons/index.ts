@@ -1,2 +1,2 @@
-export { PrimaryButton as Button } from './PrimaryButton';
+export { PrimaryButton } from './PrimaryButton';
 export { EmergencyButton } from './EmergencyButton'; 

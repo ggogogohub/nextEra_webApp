@@ -1,28 +1,98 @@
 import React from 'react';
+import styled from 'styled-components';
+import { theme } from '../../../styles/theme';
 
 interface PrimaryButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'default' | 'outline' | 'ghost' | 'secondary' | 'destructive' | 'link';
-  size?: 'small' | 'default' | 'large' | 'icon';
+  variant?: 'default' | 'outline' | 'ghost';
+  size?: 'small' | 'default' | 'large';
   isLoading?: boolean;
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
 }
 
-const variantClasses: Record<string, string> = {
-  default: 'bg-primary text-primary-foreground hover:bg-primary/90',
-  outline: 'border border-input bg-background hover:bg-accent hover:text-accent-foreground',
-  ghost: 'hover:bg-accent hover:text-accent-foreground',
-  secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/80',
-  destructive: 'bg-destructive text-destructive-foreground hover:bg-destructive/90',
-  link: 'text-primary underline-offset-4 hover:underline',
-};
-
-const sizeClasses: Record<string, string> = {
-  small: 'h-9 rounded-md px-3',
-  default: 'h-10 px-4 py-2',
-  large: 'h-11 rounded-md px-8',
-  icon: 'h-10 w-10',
-};
+const StyledButton = styled.button<PrimaryButtonProps>`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: ${theme.spacing[2]};
+  height: ${({ size }) => 
+    size === 'small' ? '40px' : 
+    size === 'large' ? '64px' : 
+    '52px'};
+  padding: 0 ${theme.spacing[6]};
+  border-radius: 8px;
+  font-family: ${theme.typography.fonts.primary};
+  font-weight: ${theme.typography.weights.semibold};
+  font-size: ${theme.typography.sizes.base};
+  line-height: ${theme.typography.lineHeights.tight};
+  transition: all ${theme.animations.duration.fast} ${theme.animations.easing.default};
+  
+  /* Default variant */
+  background-color: ${theme.colors.primary.main};
+  color: ${theme.colors.text.light};
+  border: 0.5px solid ${theme.colors.primary.hover};
+  
+  &:hover {
+    background-color: ${theme.colors.primary.hover};
+    transform: scale(1.02);
+  }
+  
+  &:active {
+    transform: scale(0.95);
+  }
+  
+  &:disabled {
+    background-color: ${theme.colors.surface.light};
+    color: ${theme.colors.text.secondary};
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+  
+  /* Outline variant */
+  ${({ variant }) => variant === 'outline' && `
+    background-color: transparent;
+    border: 1px solid ${theme.colors.primary.main};
+    color: ${theme.colors.primary.main};
+    
+    &:hover {
+      background-color: ${theme.colors.primary.main}10;
+    }
+  `}
+  
+  /* Ghost variant */
+  ${({ variant }) => variant === 'ghost' && `
+    background-color: transparent;
+    border: none;
+    color: ${theme.colors.primary.main};
+    
+    &:hover {
+      background-color: ${theme.colors.primary.main}10;
+    }
+  `}
+  
+  /* Loading state */
+  ${({ isLoading }) => isLoading && `
+    position: relative;
+    color: transparent;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      border: 2px solid ${theme.colors.text.light};
+      border-radius: 50%;
+      border-top-color: transparent;
+      animation: spin ${theme.animations.duration.normal} linear infinite;
+    }
+  `}
+  
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+`;
 
 export const PrimaryButton: React.FC<PrimaryButtonProps> = ({
   children,
@@ -31,24 +101,18 @@ export const PrimaryButton: React.FC<PrimaryButtonProps> = ({
   isLoading = false,
   leftIcon,
   rightIcon,
-  className = '',
   ...props
 }) => {
   return (
-    <button
-      className={`inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 ${variantClasses[variant]} ${sizeClasses[size]} ${className}`}
-      disabled={isLoading || props.disabled}
+    <StyledButton
+      variant={variant}
+      size={size}
+      isLoading={isLoading}
       {...props}
     >
-      {isLoading ? (
-        <span className="inline-block animate-spin border-2 border-t-transparent border-primary rounded-full w-5 h-5" />
-      ) : (
-        <>
-          {leftIcon}
-          {children}
-          {rightIcon}
-        </>
-      )}
-    </button>
+      {!isLoading && leftIcon}
+      {children}
+      {!isLoading && rightIcon}
+    </StyledButton>
   );
 }; 
